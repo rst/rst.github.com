@@ -14,9 +14,6 @@ body {
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-a:hover, a:active, #sidebar a:active, #sidebar a:hover, #content a {
-  color: #b40 !important;
-}
 #site {
   width: 850px;
   margin: auto;
@@ -34,7 +31,14 @@ h1 {
 
 h1 a, h1 a:link, h1 a:visited {
   text-decoration: none;
-  color: #222;
+}
+
+a:link, a:visited {
+  color: #0000cc
+}
+
+a:link:hover, a:visited:hover {
+  color: #0000ff
 }
 
 #slogan {
@@ -46,9 +50,6 @@ h1 a, h1 a:link, h1 a:visited {
   padding: 10px 20px 20px 20px;
   border-left: 5px solid #eee;
   float: right;
-}
-#sidebar a, #sidebar a:link #sidebar a:visited {
-  color: #222;
 }
 #sidebar dl, #sidebar ul {
   margin: 0 0 30px 0;
@@ -179,6 +180,15 @@ h3 {
   border: 1px solid #dddd88;
   background-color: #ffffcc;
   font-size: 80%
+}
+
+.qanote .question {
+  color: #0000cc;
+  cursor: pointer
+}
+
+.qanote a.question:hover {
+  color: #0000ff;
 }
 
 .qanote .answer {
