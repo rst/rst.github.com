@@ -191,6 +191,15 @@ h3 {
   color: #0000ff;
 }
 
+.qanote .closer {
+  color: #0000aa;
+  cursor: pointer
+}
+
+.qanote a.closer:hover {
+  color: #0000ff;
+}
+
 .qanote .answer {
   display: none
 }

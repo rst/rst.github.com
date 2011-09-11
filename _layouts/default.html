@@ -50,9 +50,12 @@
 
      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
      <script type="text/javascript">
-       $(".question").click(function(evt) {
+       $(".qanote .answer").append( '<p><a class="closer">Close</a></p>' )
+       var toggler = function(evt) {
          $(evt.currentTarget).parents().filter('.qanote').toggleClass('open')
-       })
+       }
+       $(".qanote .question").click( toggler )
+       $(".qanote .closer").click( toggler )
      </script>
 
     {% for js in page.javascript %}
