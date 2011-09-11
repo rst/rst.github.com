@@ -34,7 +34,7 @@ h1 a, h1 a:link, h1 a:visited {
 }
 
 a:link, a:visited {
-  color: #0000cc
+  color: #0000aa
 }
 
 a:link:hover, a:visited:hover {
@@ -183,7 +183,7 @@ h3 {
 }
 
 .qanote .question {
-  color: #0000cc;
+  color: #0000aa;
   cursor: pointer
 }
 
