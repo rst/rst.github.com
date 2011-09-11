@@ -1,0 +1,18 @@
+/* No scripting: Override default.css rules to show qanote answers, since
+ * the JS to pop them open can't run.  And don't color the questions blue,
+ * since they're not mouseable.
+ */
+
+body .qanote .answer {
+  display: inline
+}
+
+body .qanote .question {
+  color: #000;
+  cursor: default
+}
+
+body .qanote a.question:hover {
+  color: #000;
+}
+
