@@ -1,0 +1,26 @@
+---
+layout: default
+javascript:
+  - /javascripts/json_search.0.9.0.js
+  - /javascripts/home.js
+---
+ 
+
+<div id="search_results_area">
+  <h2>Design notes <span id="result_count"></span></h2>
+  <ul id="search_results" class="posts">
+  </ul>
+</div>
+
+<div id="home">
+  <h2>Design notes</h2>
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <p>{{ post.summary }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+
+</div>
