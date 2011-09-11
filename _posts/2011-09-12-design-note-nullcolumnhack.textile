@@ -1,0 +1,56 @@
+---
+layout: post
+title: Dealing with "NullColumnHack"
+summary: Dealing gracefully with a SQLite glitch
+---
+The native SQLite APIs for Android have a glitch:  inserting a completely
+empty <tt>ContentValues</tt> doesn't work.  The reason is that <tt>SQLite</tt>
+requires at least one column to be specified on an insert.
+
+To get around that, the native <tt>SQLiteDatabase</tt> <tt>insert</tt>
+helper has an odd extra argument, <tt>nullColumnHack</tt>.  The idea
+is that this should be the name of a nullable column in the table into
+which you're doing the <tt>insert</tt>.  So, if you want to
+<tt>insert</tt> a completely empty <tt>ContentValues</tt>, you also
+supply a column name in <tt>nullColumnHack</tt>.  It then behaves as
+if you'd explicitly set the value of the column named in
+<tt>nullColumnHack</tt> to <tt>null</tt>, in the
+<tt>ContentValues</tt>, thereby meeting <tt>SQLite</tt>'s requirement
+that you name at least one column.
+
+(So, why not just do that?  Never mind.)
+
+The problem I'm trying to address here is that the Positronic Net
+generic <tt>ContentRepository</tt> framework doesn't allow callers to
+supply this odd extra argument on an <tt>insert</tt>, and there's no
+obvious place to put it.  Right now, we just supply a <tt>null</tt> as
+the value of <tt>nullColumnHack</tt> --- which is always fine, so long
+as the argument <tt>ContentValues</tt> isn't empty.  But what if it is? 
+
+Fortunately, to work, it just has to be the name of _some_ nullable
+column in the relevant table --- meaning that the _same_ value will
+work for any insert into a given table.  Which means that if the
+caller can't supply it at the point of the insert (because the API has
+no place for it), it could be supplied at database creation:
+
+{% highlight scala %}
+object TodoDb extends Database( 
+  filename = "todos.sqlite3",
+  nullColumnHack = Map( "todo_items" -> "sign_off_date", ...)
+ ) 
+{
+  def schemaUpdates = ...
+}
+{% endhighlight %}
+
+and we could rig <tt>insert</tt> on a DB-backed <tt>ContentQuery</tt>
+to look up the proper value for its table in the map.  As a fringe 
+benefit, this lets the programmer write the set of names down just
+once, as opposed to once per insert.
+
+(If the overhead for one lookup in a tiny hash per insert got to be
+significant, the implementation support for this could be bundled into
+a subclass of <tt>Database</tt>.)
+
+As another fringe benefit, writing this down is a quick way to check
+the formatting of design notes.
