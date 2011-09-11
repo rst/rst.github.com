@@ -20,6 +20,7 @@
      {% for css in page.css %}
        <link rel="stylesheet" href="{{ css }}" type="text/css" />
      {% endfor %}
+
   </head>
   <body>
     <a href="http://github.com/rst"><img style="position: absolute; top: 0; left: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png" alt="Fork me on GitHub" /></a>
@@ -39,8 +40,6 @@
         </ul>
       </div>
       
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6/prototype.js"></script>
-      
       <div id="content">
         {{ content }}
       </div>
@@ -48,6 +47,15 @@
       <div class="clear"></div>
       
     </div>
+
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+     <script type="text/javascript">
+       $(".question").bind('click', function(evt) {
+         var parents = $(evt.currentTarget).parents()
+         var filtered = parents.filter('.qanote')
+         filtered.toggleClass('open')
+       })
+     </script>
 
     {% for js in page.javascript %}
       <script type="text/javascript" src="{{ js }}"></script>
