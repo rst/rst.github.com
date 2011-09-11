@@ -4,13 +4,13 @@ title: Positronic Net Tutorial
 summary: Getting started with Positronic Net.
 ---
 
-h1. Positronic Net Tutorial
+# Positronic Net Tutorial
 
 This document assumes that you've got SBT, the android-sbt plugin, and
 the library installed, mainly to save me from having to write up 
 procedures to do that while I think they aren't stable yet.
 
-h2. A code sample
+## A code sample
 
 We're going to do a to-do list.  We're going to store items in SQLite.
 Let's say a few words about that, and then define the schema:
