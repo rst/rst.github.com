@@ -12,6 +12,8 @@ web development framework, though, as we'll see, it has some twists
 of its own in order to accommodate its requirements (most notably,
 that database I/O and UI management happen on different threads).
 
+### Setting things up
+
 But we'll start here with the description of an item.  There are all
 sorts of things you can imagine having here --- an `is_done` status to
 indicate that the task has been accomplished, a `todo_list_id` if we
@@ -81,8 +83,7 @@ object TodoDb extends Database( filename = "todos.sqlite3" )
 This does a few things --- it declares the database as a singleton
 object, `TodoDb`, gives the filename for it, and specifies the SQL
 used to create the tables that will be used to actually store the
-contents.  (We'll see how user interface code deals with the singleton
-object in a bit.)
+contents.  
 
 Note that the row ID column is declared as `_id integer primary key`;
 this follows Android conventions.
@@ -139,19 +140,40 @@ all arguments, that's good enough --- so we give them all defaults.
 (The `id` attribute defaults to a value which no actual stored 
 record will ever have --- in fact, -1.)
 
-The `RecordManager` figures out on its own which fields should be
-matched to which database columns based on naming conventions --- the
-operative convention being that a field with a `camelCased` name is
-mapped to the column whose name is the same thing with underscores
-(thus `camel_cased`, if anyone was actually going to name a field
-that), with the special case that a field named `id` maps to a
-column named `_id`.
+### Using it
 
-The `RecordManager` knows how to map fields of all numeric types
-(`Int`, `Long`, `Float`, etc.), `String`s, and `Boolean`s.  Since
-SQLite lacks native Boolean support, a `Boolean` field is expected
-to be mapped to an `Int`-valued column, with values 0 or 1 for 
-`false` or `true`, respectively.
+So, how do we use this?  Well, so long as we aren't planning on
+persisting our `TodoItem`s into the database, nothing has changed;
+we're free to create and copy them exactly as we normally would.
+
+What we've added is the ability to ask the `RecordManager` to store
+`TodoItem`s into the `Database`, and to retrieve them (so long as the
+`Database` has been opened; we'll cover that in detail in the next
+section).  
+
+<div class="qanote">
+  <a class="question">How does the <tt>RecordManager</tt> know which
+                      field goes with which column?</a>
+  <div class="answer">
+   <p>
+    The <tt>RecordManager</tt> can figure out on its own which fields should be
+    matched to which database columns based on naming conventions --- the
+    operative convention being that a field with a <tt>camelCased</tt> name is
+    mapped to the column whose name is the same thing with underscores
+    (thus <tt>camel_cased</tt>, if anyone was actually going to name a field
+    that), with the special case that a field named `id` maps to a
+    column named <tt>_id</tt>.
+   </p>
+
+   <p>
+    The <tt>RecordManager</tt> knows how to map fields of all numeric types
+    (<tt>Int</tt>, <tt>Long</tt>, <tt>Float</tt>, etc.), <tt>String</tt>s, and <tt>Boolean</tt>s.  Since
+    SQLite lacks native Boolean support, a <tt>Boolean</tt> field is expected
+    to be mapped to an <tt>Int</tt>-valued column, with values 0 or 1 for 
+    <tt>false</tt> or <tt>true</tt>, respectively.
+   </p>
+  </div>
+</div>
 
 <div class="qanote">
   <a class="question">What if there isn't a matching field or column?</a>
@@ -159,7 +181,7 @@ to be mapped to an `Int`-valued column, with values 0 or 1 for
 
    <p>Fields with no obviously matching column (or columns with no obviously
    matching field) are not mapped by default, though in the declaration of
-   the `RecordManager` instance, you can request nonstandard mappings
+   the <tt>RecordManager</tt> instance, you can request nonstandard mappings
    explicitly.</p>
    
    <p>There's an example of that in the sample
@@ -191,3 +213,4 @@ to be mapped to an `Int`-valued column, with values 0 or 1 for
  </div>
 </div>
 
+Go to [Usage examples](/tut_sections/1999/01/01/simple_activity.html)
