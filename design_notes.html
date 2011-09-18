@@ -15,7 +15,7 @@ javascript:
 <div id="home">
   <h2>Design notes</h2>
   <ul class="posts">
-    {% for post in site.posts %}
+    {% for post in site.categories.design_notes %}
       <li>
         <a href="{{ post.url }}">{{ post.title }}</a>
         <p>{{ post.summary }}</p>
