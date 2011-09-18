@@ -7,3 +7,8 @@ layout: default
   {{ content }}
 </div>
 
+<div id="bottomnav">
+  {% if page.previous.url %}
+       Go to <a href="{{page.previous.url}}">{{page.previous.title}}</a>
+  {% endif %}
+</div>

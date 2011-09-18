@@ -182,4 +182,3 @@ With the code to an item, we're finished:
   }
 {% endhighlight %}
 
-Go to [Tightening things up](/tut_sections/1998/01/01/first_shorthands.html)

@@ -213,4 +213,3 @@ section).
  </div>
 </div>
 
-Go to [Usage examples](/tut_sections/1999/01/01/simple_activity.html)
