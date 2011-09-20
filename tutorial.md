@@ -16,8 +16,11 @@ programming languages.  (For the moment, we're assuming familiarity
 with both Scala and the basics of the Android API; hopefully, that'll
 change at some point.)
 
+<img src="images/pnettodo.png" style="float:right">
+
 This tutorial tries to get you acquainted with the basic concepts of
-the library, with a simple todo-list application.  (The initial UI is
+the library, with the simple todo-list application you can see at
+right.  (The initial UI is
 that users fill in a text field and push an "Add" button to add an
 item to the list, and tap on the item to remove it.  Which is pretty
 crude; we'll do better later.)
@@ -34,6 +37,11 @@ Positronic Net seriously cuts down on the line count, give examples
 of usage in an `Activity` that uses only standard APIs, and then show
 how the shorthand helpers introduced by Positronic Net can also make
 pure UI code easier to write and easier to read.
+
+The payoff is [here](https://github.com/rst/positronic_tutorial_todo/blob/phase2/src/main/scala/Todo.scala) ---
+the complete application in
+less than fifty lines of code (plus twenty-odd `import`s at the top),
+with the tap-to-delete behavior specified with only three lines.
 
 Discussion is in sections, as follows, if you'd like to skip ahead for
 a quick preview of an individual topic:
