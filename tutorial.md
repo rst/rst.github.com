@@ -6,6 +6,8 @@ summary: Getting started with Positronic Net.
 
 # Positronic Net Tutorial
 
+<img src="images/pnettodo.png" style="float:right">
+
 Positronic Net is a library that aims to make it more convenient to
 write Android applications, by taking care of background plumbing
 tasks, and letting you concentrate less on the requirements of the
@@ -16,8 +18,6 @@ programming languages.  (For the moment, we're assuming familiarity
 with both Scala and the basics of the Android API; hopefully, that'll
 change at some point.)
 
-<img src="images/pnettodo.png" style="float:right">
-
 This tutorial tries to get you acquainted with the basic concepts of
 the library, with the simple todo-list application you can see at
 right.  (The initial UI is
@@ -25,26 +25,50 @@ that users fill in a text field and push an "Add" button to add an
 item to the list, and tap on the item to remove it.  Which is pretty
 crude; we'll do better later.)
 
-This shouldn't take a whole lot of code, and it doesn't.  The complete
-description of the database and items is twenty-one lines.  The first
-version of the user interface we'll see is fifty-four lines; we'll
-then use various Positronic Net shorthands to cut that in half, by
-eliminating boilerplate and letting the library keep track of the
-bookkeeping.
+The payoff is [here](https://github.com/rst/positronic_tutorial_todo/blob/phase2/src/main/scala/Todo.scala) --- an application in which the entire UI
+code is reduced to this:
 
-We start off with the data storage, since that's an area where
-Positronic Net seriously cuts down on the line count, give examples
-of usage in an `Activity` that uses only standard APIs, and then show
-how the shorthand helpers introduced by Positronic Net can also make
-pure UI code easier to write and easier to read.
+{% highlight scala %}
+class TodoItemsActivity 
+  extends Activity with PositronicActivityHelpers with ViewHolder
+{
+  onCreate {
+    setContentView( R.layout.todo_items )
+    useAppFacility( TodoDb )
 
-The payoff is [here](https://github.com/rst/positronic_tutorial_todo/blob/phase2/src/main/scala/Todo.scala) ---
-the complete application in
-less than fifty lines of code (plus twenty-odd `import`s at the top),
-with the tap-to-delete behavior specified with only three lines.
+    val adapter: IndexedSeqSourceAdapter[ TodoItem ] = 
+      new IndexedSeqSourceAdapter(
+        this, TodoItems.records,
+        itemViewResourceId = android.R.layout.simple_list_item_1 )
+  
+    findView( TR.listItemsView ).setAdapter( adapter )
 
-Discussion is in sections, as follows, if you'd like to skip ahead for
-a quick preview of an individual topic:
+    findView( TR.listItemsView ).onItemClick{ (view, posn, id) =>
+      TodoItems ! Delete( adapter.getItem( posn ))
+    }
+
+    findView( TR.addButton ).onClick {
+      val text = findView( TR.newItemText ).getText.toString.trim
+      if (text != "") {
+        TodoItems ! Save( new TodoItem( text ))
+        findView( TR.newItemText ).setText( "" )
+      }
+    }
+  }
+}
+{% endhighlight %}
+
+For this first version, we'll start by presenting the backing database
+support which is necessary to support this (which is even shorter than
+the UI code --- 21 lines).  Then we'll show a first version of the UI
+code, which explicitly does a lot of the plumbing chores which are
+oddly absent from the sample above:  updating the `ListView` when the
+list of items changes, closing the database when the `Activity` shuts
+down and so forth.  Then we'll go though and see how the library can
+take care of that plumbing for us.
+
+Broken down into individual sections, that's as follows, if you'd
+like to skip ahead --- or, just start at the beginning:
 
 <div id="home">
   <ul class="posts">
