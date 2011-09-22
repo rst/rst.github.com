@@ -46,6 +46,20 @@ of some details, things are slightly more elaborate:
   override def onCreate( savedInstanceState: Bundle ) = {
     ...
     TodoItems ! AddWatcherAndFetch( this ){ items => adapter.resetSeq(items) }
+    ...
+    listView.setOnItemClickListener {
+      new OnItemClickListener {
+        override def onItemClick( parent: AdapterView[_], view: View, 
+                                  posn: Int, id: Long ) = {
+          TodoItems ! Delete( adapter.getItem( posn ) )
+          // Fetch is no longer needed here.
+        }
+      }
+    }
+    ...
+    button.setOnClickListener{
+      // Fetch is no longer needed here either...
+    }
   }
 
   override def onDestroy = {
@@ -62,7 +76,8 @@ What this does is that it will run the
 
 change-handler the first time it's called (that's the `Fetch` part of
 `AddWatcherAndFetch`), and _on every subsequent change_ until 
-`StopWatcher` is called (that's the `AddWatcher` part).  
+`StopWatcher` is called (that's the `AddWatcher` part).  As a result,
+the explicit `Fetch` operations after changes are no longer needed.
 
 (The reason for `StopWatcher` is that in an application with multiple
 activities, the database can stay open after one of the application's
@@ -207,4 +222,3 @@ framework.
 
 ### Handling user actions with less boilerplate
 
-TBD

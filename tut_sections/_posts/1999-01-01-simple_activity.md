@@ -10,11 +10,24 @@ a single screen, controlled by a single android `Activity`, which
 shows the current contents of the `TodoItems` table, as it currently
 exists in the database.  
 
-Our user interface is as specified in [this layout](http://...).  Most
+Our user interface is as specified in [this layout](https://github.com/rst/positronic_tutorial_todo/blob/79a79c8dedd529e3c61684c89e723418e1198f3c/src/main/res/layout/todo_items.xml).  
+Most
 of it is a `ListView` which contains the current todo list items;
 initially, tapping one of these will delete it.  At the top, there is
 an `EditText` to add the text for new items, and a button which adds
 an item whose `description` is the current content of the `EditText`.
+
+<div class="qanote">
+  <a class="question">What are those <tt>org.positronicnet.ui.Positronic...</tt>
+                      classes in the layout?</a>
+  <div class="answer">
+   <p>They're subclasses of the similarly-named Android classes,
+      with some extra convenience methods mixed in.  For now, we'll
+      be using them exactly like their standard base classes; we'll
+      get to the convenience features in the next section.
+   </p>
+  </div>
+</div>
 
 So, what does the code look like?
 
