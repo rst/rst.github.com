@@ -222,3 +222,232 @@ framework.
 
 ### Handling user actions with less boilerplate
 
+Another thing that's awkward, looking at the activity code that we've
+got so far, is declaring handlers for various user actions.  To show
+what we've got so far, here's deletion:
+
+{% highlight scala %}
+    listView.setOnItemClickListener {
+      new OnItemClickListener {
+        override def onItemClick( parent: AdapterView[_], view: View, 
+                                  posn: Int, id: Long ) = {
+          TodoItems ! Delete( adapter.getItem( posn ) )
+        }
+      }
+    }
+{% endhighlight %}
+
+(That's the code as in the last section, without the `Fetch` of the
+revised list, which the adapter is now doing on its own.)
+
+Now, the last section mentioned in passing that the views in the
+[layout](https://github.com/rst/positronic_tutorial_todo/blob/79a79c8dedd529e3c61684c89e723418e1198f3c/src/main/res/layout/todo_items.xml)
+aren't the standard android `ListView`, `Button`, and so forth,
+but enhanced versions of them.  (Enhanced just by mixing in a
+library trait:  the definitions from the library source
+are pretty much
+
+{% highlight scala %}
+class PositronicButton( context: Context, attrs: AttributeSet = null )
+  extends android.widget.Button( context, attrs ) 
+  with org.positronicnet.ui.PositronicHandlers
+
+class PositronicListView( context: Context, attrs: AttributeSet = null )
+  extends android.widget.ListView( context, attrs ) 
+  with org.positronicnet.ui.PositronicHandlers 
+  with org.positronicnet.ui.PositronicItemHandlers
+{% endhighlight %}
+
+where `PositronicHandlers` and `PositronicItemHandlers` declare a
+whole bunch of extra convenience methods.  It's time to put a few
+of them to use.
+
+For starters, the anonymous `OnItemClickListener` in the code above is
+really just a wrapper around a function definition, which has to be
+written that way because Java doesn't allow function definitions to
+stand on their own (or to be anonymous).  Scala does, and the
+`PositronicItemHandlers` let us take advantage:
+
+{% highlight scala %}
+    listView.onItemClick{ (view, posn, id) =>
+      TodoItem ! Delete( adapter.getItem( posn ))
+    }
+{% endhighlight %}
+
+There go three lines of pure boilerplate.  Similarly for the `Button`.
+Instead of 
+
+{% highlight scala %}
+    button.setOnClickListener{
+      new OnClickListener {
+        override def onClick(v: View) = {
+        ...
+      }
+    }
+{% endhighlight %}
+
+we can write
+
+{% highlight scala %}
+    button.onClick {
+      ...
+    }
+{% endhighlight %}
+
+Short and to the point.
+
+<div class="qanote">
+ <a class="question">Why not use implicit conversions?</a>
+ <div class="answer">
+   <p>
+     People who already know Scala will have spotted that in these
+     cases, we didn't really <em>need</em> to define traits and
+     mix them into the widgets; we could instead have defined an
+     "implicit conversion" from the widget to a wrapper class
+     which supports the extra methods.
+   </p>
+   <p>
+     That's possible in these two cases because the variant
+     `onClick` and `onListItemClick` methods we're using here
+     can be defined in terms of the standard versions --- by
+     wrapping their arguments in instances of the Java
+     `Listener` classes, and feeding those to the standard
+     API.
+   </p>
+   <p>
+     Things get more awkward, though, when we're trying to define
+     extensions that need to refer to state of their own --- for
+     instance, adding extra dispatch state.  So, we could have
+     two sets of extensions:  one available through implicit
+     conversions, and another, those requiring state, available 
+     only through mixin traits.  Or we could have one set, with
+     one way to get at it.  For now, we're trying the latter
+     approach.
+   </p>
+ </div>
+</div>
+
+### Button is a button is a button...
+
+Lastly, there's the awkward Scala cast syntax mentioned in the previous
+section:
+
+{% highlight scala %}
+    val button = findViewById( R.id.addButton ).asInstanceOf[ Button ]
+{% endhighlight %}
+
+I mentioned there that there's a better way.  It's time to say what it is.
+
+One of the fringe benefits that you get with the SBT-Android plugin
+that we're using is a set of `TypedResource`s, generated from the
+layouts in a process analogous to the standard Android build tooling
+that generates `R.java`.  The file can be found a few levels deep in a
+`src_managed` subdirectory once you've finished a build, and looks
+something like this:
+
+{% highlight scala %}
+package org.positronicnet.tutorial.todo
+import android.app.Activity
+import android.view.View
+
+case class TypedResource[T](id: Int)
+object TR {
+  val newItemText = 
+    TypedResource[org.positronicnet.ui.PositronicEditText](R.id.newItemText)
+  val addButton = 
+    TypedResource[org.positronicnet.ui.PositronicButton](R.id.addButton)
+  val listItemsView = 
+    TypedResource[org.positronicnet.ui.PositronicListView](R.id.listItemsView)
+}
+...
+{% endhighlight %}
+
+That defines a `TypedResource` type, with a generic type parameter,
+and a bunch of constants of that type.  So, for instance, `TR.addButton`
+is defined as a `TypedResource[PositronicButton]`, and `TR.addButton.id`
+is the same as `R.id.addButton`.  With that, we can define a utility trait:
+
+{% highlight scala %}
+trait ViewHolder {
+  def findViewById( id: Int ): View
+  def findView[T]( t: TypedResource[T] ) = findViewById( t.id ).asInstanceOf[T]
+}
+{% endhighlight %}
+
+and mix it into our activity --- giving it a `findView` method which
+eliminates the casts, without sacrificing type safety:
+
+{% highlight scala %}
+class TodoItemsActivity 
+  extends Activity with PositronicActivityHelpers with ViewHolder
+{
+  onCreate {
+    ...
+    findView( TR.listItemsView ).setAdapter( adapter )
+
+    findView( TR.listItemsView ).onItemClick{ (view, posn, id) =>
+      TodoItem ! Delete( adapter.getItem( posn ))
+    }
+
+    findView( TR.addButton ).onClick {
+      ...
+    }
+  }
+}
+{% endhighlight %}
+
+This `findView` method deduces its type parameter, `T`, from the
+`TypedResource` it takes as an argument.  So, the type of
+`findView(TR.listItemsView)` is `PositronicListView` because
+that's the type parameter of `TR.listItemsView`.  Similarly, the
+compiler knows that the result of `findView(TR.addButton)` is a
+`PositronicButton`.  If you tried to do a
+
+{% highlight scala %}
+    findView( TR.adddButon ).onItemClick{ ... }
+{% endhighlight %}
+
+you'd get a type error at compile time, because buttons can't do that.
+Not even with Positronic Net enhancements.
+
+### Putting it all together
+
+With all the above changes, we've finally gotten to the version of the
+`Activity` source that you've already seen on the tutorial front page:
+
+{% highlight scala %}
+class TodoItemsActivity 
+  extends Activity with PositronicActivityHelpers with ViewHolder
+{
+  onCreate {
+    setContentView( R.layout.todo_items )
+    useAppFacility( TodoDb )
+
+    val adapter: IndexedSeqSourceAdapter[ TodoItem ] = 
+      new IndexedSeqSourceAdapter(
+        this, TodoItem,
+        itemViewResourceId = android.R.layout.simple_list_item_1 )
+  
+    findView( TR.listItemsView ).setAdapter( adapter )
+
+    findView( TR.listItemsView ).onItemClick{ (view, posn, id) =>
+      TodoItem ! Delete( adapter.getItem( posn ))
+    }
+
+    findView( TR.addButton ).onClick {
+      val text = findView( TR.newItemText ).getText.toString.trim
+      if (text != "") {
+        TodoItem ! Save( new TodoItem( text ))
+        findView( TR.newItemText ).setText( "" )
+      }
+    }
+  }
+}
+{% endhighlight %}
+
+It's about half the size of the original version, but compacting
+code doesn't always make it clearer.  What's more important is that
+the bits we've eliminated were boilerplate.  With that stuff gone,
+the structure of the code that's left, and how it relates to what
+the user is trying to do, is a lot easier to perceive.  And that's
+the real goal here.
