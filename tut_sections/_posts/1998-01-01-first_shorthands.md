@@ -170,7 +170,7 @@ guessed, we've got one:
     ...
     val adapter: IndexedSeqSourceAdapter[ TodoItem ] = 
       new IndexedSeqSourceAdapter(
-        this, TodoItems.records,
+        this, TodoItems,
         itemViewResourceId = android.R.layout.simple_list_item_1 )
     ...
   }
@@ -181,15 +181,6 @@ whose only added functionality is to arrange the updates (and to ask
 the `activity` to shut them down at its `onDestroy`, which is why the
 adapter takes the `Activity` as the first argument to its
 constructor).
-
-<div class="qanote">
- <a class="question">Why <tt>TodoItems.records</tt>?</a>
- <div class="answer">
-   <p>
-      You're right.  That's silly.  I'll fix it.
-   </p>
- </div>
-</div>
 
 This is pretty terse --- but we can trim one last bit of fat.  As we've
 already mentioned, `PositronicActivityHelpers` can register bits of code
