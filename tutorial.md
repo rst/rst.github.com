@@ -38,19 +38,22 @@ class TodoItemsActivity
 
     val adapter: IndexedSeqSourceAdapter[ TodoItem ] = 
       new IndexedSeqSourceAdapter(
-        this, TodoItems.records,
+        this, TodoItem,
         itemViewResourceId = android.R.layout.simple_list_item_1 )
   
     findView( TR.listItemsView ).setAdapter( adapter )
 
     findView( TR.listItemsView ).onItemClick{ (view, posn, id) =>
-      TodoItems ! Delete( adapter.getItem( posn ))
+      TodoItem ! Delete( adapter.getItem( posn ))
     }
 
-    findView( TR.addButton ).onClick {
+    findView( TR.addButton ).onClick { addItem }
+    findView( TR.newItemText ).onKey( KeyEvent.KEYCODE_ENTER ){ addItem }
+
+    def addItem = {
       val text = findView( TR.newItemText ).getText.toString.trim
       if (text != "") {
-        TodoItems ! Save( new TodoItem( text ))
+        TodoItem ! Save( new TodoItem( text ))
         findView( TR.newItemText ).setText( "" )
       }
     }

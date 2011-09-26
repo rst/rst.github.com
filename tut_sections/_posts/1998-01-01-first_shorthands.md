@@ -294,30 +294,60 @@ we can write
     }
 {% endhighlight %}
 
-Short and to the point.
+Lastly, there's the question of adding an item on an 'Enter'
+keypress in the textfield.  There are two relevant shorthands.
+The one that gets access to any key event would look like this:
+
+{% highlight scala %}
+    val textView = findViewById( R.id.newItemText ).asInstanceOf[TextView]
+
+    textView.onKey{ (keyCode, keyEvent) => {
+      if (keyCode == KeyEvent.KEYCODE_ENTER
+          && ev.getAction == KeyEvent.ACTION_DOWN) 
+      {
+        addItem
+        return true
+      }
+      return false
+    }
+{% endhighlight %}
+
+However, there's a particularly terse shorthand for the common case of
+declaring that you always want an `ACTION_DOWN` keypress of a
+particular key in a particular view to be handled in a particular way:
+
+{% highlight scala %}
+    textView.onKey( KeyEvent.KEYCODE_ENTER ){ addItem }
+{% endhighlight %}
 
 <div class="qanote">
  <a class="question">Why not use implicit conversions?</a>
  <div class="answer">
    <p>
-     People who already know Scala will have spotted that in these
+     People who already know Scala will have spotted that in some of these
      cases, we didn't really <em>need</em> to define traits and
      mix them into the widgets; we could instead have defined an
      "implicit conversion" from the widget to a wrapper class
      which supports the extra methods.
    </p>
    <p>
-     That's possible in these two cases because the variant
+     In particular, it would be possible for the
      `onClick` and `onListItemClick` methods we're using here
      can be defined in terms of the standard versions --- by
      wrapping their arguments in instances of the Java
      `Listener` classes, and feeding those to the standard
-     API.
+     API.  And that even goes for the simple version of the
+     `onKey` handler.
    </p>
    <p>
      Things get more awkward, though, when we're trying to define
      extensions that need to refer to state of their own --- for
-     instance, adding extra dispatch state.  So, we could have
+     instance, adding extra dispatch state, as in the per-keycode
+     version of the `onClick` handler, which has to deal with the
+     case of declaring handlers for, say, all of the arrow kepresses.  
+   </p>
+   <p>
+     So, we could have
      two sets of extensions:  one available through implicit
      conversions, and another, those requiring state, available 
      only through mixin traits.  Or we could have one set, with

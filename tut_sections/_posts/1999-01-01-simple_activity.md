@@ -173,25 +173,53 @@ thread executes queries in the order they're posted to it.  So, even
 though the database operations will be happening on a separate thread,
 the revision will show the result of the delete.
 
-With the code to an item, we're finished:
+Lastly, there's the code to add items --- when the "Add Item" button
+is clicked, or when the user hits "Enter".  What has to happen either
+way is pretty straightforward: if there's non-blank text in the entry
+field, create an item, refresh the list, and clear the text field:
+
+{% highlight scala %}
+    def addItem = {
+      val text = textView.getText.toString.trim
+      if (text != "") {
+        TodoItems ! Save( new TodoItem( text ))
+        TodoItems ! Fetch{ adapter.resetSeq( _ ) }
+      }
+      textView.setText( "" )
+    }
+{% endhighlight %}
+
+Unfortunately, the plumbing required to make it happen on taps
+and 'Enter' keyclicks actually takes more code:
 
 {% highlight scala %}
   override def onCreate(savedInstanceState: Bundle) {
     ...
     val button   = findViewById( R.id.addButton ).asInstanceOf[ Button ]
+    val textView = findViewById( R.id.newItemText ).asInstanceOf[TextView]
+
     button.setOnClickListener{
       new OnClickListener {
-        override def onClick(v: View) = {
-          val textView = findViewById( R.id.newItemText ).asInstanceOf[TextView]
-          val text = textView.getText.toString.trim
-          if (text != "") {
-            TodoItems ! Save( new TodoItem( text ))
-            TodoItems ! Fetch{ adapter.resetSeq( _ ) }
+        override def onClick(v: View) = { addItem }
+      }
+    }
+
+    textView.setOnKeyListener{
+      new OnKeyListener {
+        def onKey( v: View, keyCode: Int, ev: KeyEvent ): Boolean = { 
+          if (keyCode == KeyEvent.KEYCODE_ENTER
+              && ev.getAction == KeyEvent.ACTION_DOWN) 
+          {
+            addItem
+            return true
           }
-          textView.setText( "" )
-        }
+          return false
+        } 
       }
     }
   }
 {% endhighlight %}
+
+You may recall that in the "shorthand" version of the UI code, this
+plumbing was two lines of code.  It's time to see how that happens.
 
