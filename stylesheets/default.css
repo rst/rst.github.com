@@ -75,14 +75,6 @@ a:link:hover, a:visited:hover {
   width: 600px;
   padding: 0 20px 20px 20px;
 }
-#content ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-#content li {
-  margin-bottom: 10px;
-}
 
 h3 {
   margin: 0 0 10px 0;
