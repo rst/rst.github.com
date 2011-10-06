@@ -3,6 +3,15 @@ layout: tut_section
 title: Database basics
 summary: How to set up data storage for a simple list in less than two dozen lines of code
 ---
+
+To recapitulate the [introduction](/tutorial.html), what we're trying
+to do initially is show how Positronic Net lets you write a simple,
+but usable, to-do list app in about fifty lines of code.  We'll be
+storing the list items in a sqlite database; initially, they'll just
+have an ID and a textual description.  (We'll be adding more later.)
+
+Let's get started.
+
 ## Data representation.
 
 As is conventional in Android, we're going to ultimately be storing
