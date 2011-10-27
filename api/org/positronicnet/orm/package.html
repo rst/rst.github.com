@@ -1,0 +1,518 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.positronicnet.orm</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
+      <script type="text/javascript" src="../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../lib/package_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a></p>
+        <h1>orm</h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <span class="name">orm</span>
+        
+        
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><h4>Basic Concepts</h4><p>The Positronic Net ORM tries to abstract away a lot of the boilerplate
+involved in dealing with data managed through cursors (or, more
+precisely, any data which can be accessed through a
+<a name="org.positronicnet.content.ContentRepository" class="extype" href="../content/ContentRepository.html">ContentRepository</a>; that currently
+includes both SQLite <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>s and
+Android <code>ContentProvider</code>s, via
+<a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="../content/PositronicContentResolver.html">PositronicContentResolver</a> --- though
+ContentProvider support is currently less than perfect, due to lack
+of support for batched updates.</p><p>It works by transparently mapping rows from the cursors to (and
+from) simple Scala objects, following the
+<a href="http://en.wikipedia.org/wiki/Active_record_pattern">active
+record</a> pattern --- in lowercase.</p><p>The Ruby on Rails ActiveRecord ORM was an important
+influence, particularly in the framework's embrace of &quot;convention
+over configuration&quot;.  That's perhaps best explained by example:  If
+you follow common naming conventions in for columns in tables and
+for fields in your record classes, the framework will figure out
+the mapping between them without needing explicit declarations.
+Similarly for the names of foreign keys in associations, and so forth.</p><p>(If you have a reason for violating the conventions, you <i>can</i>
+declare that you're doing something else instead; see &quot;explicit
+field mapping&quot; below for cases where it's reasonable to do that,
+and an example of how it's done.  But that's only necessary when
+you're doing something unusual.  And if you are, that becomes more
+obvious to the next guy reading the code if the unconventional
+code isn't buried among dozens of lines of conventional
+boilerplate.)</p><p>However, this is not a clone of the
+Rails ActiveRecord ORM.  There are significant differences
+--- most notably in the use of the Actor-like
+<a name="org.positronicnet.notifications" class="extype" href="../notifications/package.html">notifications</a> machinery to make it easy to
+write client code that never blocks waiting for a query result or
+an update.</p><p>So, for instance, if we have a <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>
+named <code>TodoItems</code>, for a <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class
+named <code>TodoItem</code>, then</p><pre>
+    TodoItems ! Fetch{ allTheItems =&gt; doSomethingWith( allTheItems ) }
+</pre><p>will fetch all the items (on a background thread), and <code>doSomethingWith</code>
+them when they're available,</p><pre>
+    TodoItems ! Save( new TodoItem( &quot;read the tutorial for more&quot; ))
+</pre><p>will save a new one,</p><pre>
+    TodoItems ! AddWatcher( this ){ allTheItems =&gt;
+       handleUpdate( allTheItems ) }
+</pre><p>will arrange for <code>handleUpdate</code> to be called whenever any of them change,
+and so forth.</p><p>(As with other uses of the <a name="org.positronicnet.notifications" class="extype" href="../notifications/package.html">notifications</a> machinery,
+the concurrent</p><pre>
+    manager ! action
+</pre><p>form of message sending expects to be called from an Android
+<code>HandlerThread</code>, such as the main UI thread of an <code>Activity</code>, and
+invocations of the <code>doSomethingWith</code> and <code>handleUpdate</code> callbacks
+are posted back to that <code>HandlerThread</code> for execution --- mainly
+to make it safe to manipulate an <code>Activity</code>'s <code>View</code>s in the
+callbacks, which can only be safely done from the main UI thread.
+Where that's inconvenient, as in a <code>BroadcastReceiver</code>, it's
+better to use the <code>onThisThread</code> form of
+<a name="org.positronicnet.notifications" class="extype" href="../notifications/package.html">notifications</a> action sending, q.v.</p><p>Often, you don't want to operate on all of the records in a table
+at once.  So, starting with a
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>, you can produce other
+Actor-like objects called <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>s (by
+analogy to the <code>named_scope</code>s in the Rails ActiveRecord orm) which
+refer to a restricted subset of the records, like so:</p><pre>
+    var undoneItems = TodoItems.whereEq( 'isDone', false )
+    undoneItems ! Fetch{ ... }
+</pre><p>It's even possible to add watchers on a <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>.
+But there's a limit to the magic:</p><pre>
+    undoneItems ! AddWatcher( tag ){ undoneUpdate(_) }
+    undoneItems ! Save( someTodoItem )
+</pre><p>will work, and will fire off <code>undoneUpdate</code> when the <code>Save</code> happens,
+with the new values of <code>undoneItems</code>.  We also take care that if some
+other code constructs a different <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a> with
+the same conditions, updates on one will trigger watchers on the other.
+(And of course, both will trigger watchers on <code>TodoItems</code> itself.)
+However, if someone does a</p><pre>
+    TodoItems ! Save( someRecord )
+</pre><p>that <i>won't</i> trigger watchers on <code>undoneItems</code> --- even if <code>someRecord</code>
+has <code>isDone</code> set to false.</p><p>(Incidentally, it is possible to use <code>whereEq</code>, or the somewhat
+clumsier but more general <code>where</code>, on a <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>
+to produce a further restricted <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>, as if
+it was a <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>.  Or rather, the reverse;
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> actually extends
+<a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>.)</p><p>The use of actor-like machinery suggests other Actor-like conventions
+as well --- in particular, that the objects that are shared between
+actors (in our case, say, between an <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>
+and Android <code>Activity</code> which displays its
+<a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>s) should be immutable.</p><p>As we've seen, the most important of those objects are the
+<a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>s themselves, so the
+usual convention is for them to be immutable.  It may be helpful to
+think of them as ephemeral, immutable snapshots of the mutable state
+which is, in effect, controlled by the
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>.</p><h4>Declaring Record types, and associating them with data sources</h4><p>So, to recap the above, we want to have immutable records shuffled
+between client code and a <a name="org.positronicnet.content.ContentRepository" class="extype" href="../content/ContentRepository.html">ContentRepository</a>.
+How are we going to set this up?</p><p>Let's start with the records themselves.  The simplest way
+to declare an immutable record with a bunch of fields in Scala is as a
+<code>case class</code>.  We'd like to allow for that, adding as little extra
+complexity as possible --- but we still need to add a bit for the
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> to be able to do its job.</p><p>At a minimum, there needs to be some association between the record
+class (a subclass of <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>) and the
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>; we arrange for this by having
+the <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> be an argument to the
+<a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> base class constructor.</p><p>Furthermore, the <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> has to be
+able to instantiate new instances of its
+<a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class.  The conventional approach is
+for the <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class to have a niladic
+(no arguments) constructor --- or, at the very least, a single constructor
+for which all arguments have defaults.  (If, for some reason, this doesn't
+work for you, you can override <code>newRecord</code> in the
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> to do something else instead.
+But the common pattern just works.)</p><p>Accordingly, a minimal record declaration might be something like the
+following:</p><pre>
+    case class TodoItem( description: String = null,
+                         isDone: Boolean     = false,
+                         id: Long            = ManagedRecord.unsavedId
+                       )
+      extends ManagedRecord( TodoItem )
+
+    object TodoItems extends RecordManager[TodoItem]( TodoDb(&quot;todo_items&quot;))
+</pre><p>for the <code>todo_items</code> table of a <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>
+declared like so:</p><pre>
+    object TodoDb extends Database( filename = &quot;todos.sqlite3&quot; )
+    {
+      def schemaUpdates =
+        List(&quot;&quot;&quot; create table todo_items (
+                   _id integer primary key,
+                   description string,
+                   is_done integer
+                 )
+             &quot;&quot;&quot;
+           )
+    }
+</pre><p>Some points to note in this example:</p><ul><li>The <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> doesn't have to be the
+   companion object of the <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class
+   that it manages (although it certainly can be).</li><li>The <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class needs to have a
+   <code>Long</code>-valued field named <code>id</code>, which will be mapped to the <code>_id</code>
+   within the database (to match Android conventions).</li><li>The <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> will happily persist
+   <code>Boolean</code> fields into <code>integer</code> columns by setting them to 0 or 1,
+   following SQLite's recommended convention for booleans.  It will
+   also persist numeric values (integers and floats) and strings into
+   like-typed columns.  For more complicated datatypes, see below.</li><li>Scala field names are conventionally camelCased.  However, database
+   column names are case-insensitive, and words between them are separated
+   by underscores.  The <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>
+   ordinarily converts between these conventions.  If you want to override
+   this for some reason, again, see below.</li><li>The mapped fields don't really <i>have</i> to be constructor arguments
+   of a <code>case class</code>; it isn't even strictly required that they be
+   immutable.  However, one advantage of using <code>case class</code>es is that their
+   automatically generated <code>copy</code> method makes it easy to generate dinked
+   copies in which only one field has been changed; if you do things
+   differently, you'll have to make other arrangements.  And if you
+   make anything about the objects mutable, of course, you'll need to
+   deal with the possibility of concurrent updates as well.</li><li>Aside from what's outlined above, there are no other methods that the
+   <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> is <i>required</i> to implement.
+   However, providing a few &quot;mutated-copy&quot; methods is often a good idea,
+   as a guide to intended usage; see the tutorial and sample app for
+   examples.</li></ul><h4>Explicit field mapping, and persisting unusual datatypes</h4><p>As indicated above, a <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> will
+ordinarily map <code>likeThis</code> to columns <code>like_this</code>.  If, for some reason,
+you want to override this convention, you can do it by having the
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> constructor call <code>mapField</code>
+before anything else happens.</p><p>One reason you might want to do this is to persist data of some
+kind where there's no direct conversion.  Let's say, for instance,
+that you want it to look like one of your
+<a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> classes has a persistent
+<code>java.util.Date</code>-valued field, called, say, <code>dueDate</code>.  However,
+SQLite has no date-valued columns, so it won't work to shove them
+in directly.</p><p>One approach that works is to have the persistent column be a
+64-bit SQLite integer which gets mapped to a Scala <code>Long</code> called
+<code>rawDueDate</code>, and then arrange the conversions:</p><pre>
+    object MyDb extends Database( filename = &quot;db.sqlite3&quot; )
+    {
+      def schemaUpdates =
+        List(&quot;&quot;&quot; create table projects (
+                   _id integer primary key,
+                   due_date integer,
+                   ...
+                 )
+             &quot;&quot;&quot;
+           )
+    }
+
+    case class Project( rawDueDate: Long = ...,
+                        ... )
+      extends ManagedRecord( Projects )
+    {
+      lazy val dueDate = new Date( rawDueDate )
+      def changeDueDate( newDate: Date ) =
+        this.copy( rawDueDate = newDate.getTime )
+      ...
+    }
+
+    object Projects extends RecordManager[ Project ](MyDb(&quot;projects&quot;)) {
+      mapField( &quot;rawDueDate&quot;, &quot;due_date&quot; )
+    }
+</pre><p>If, for some reason, you want to do all the field-mapping explicitly,
+and don't want the standard conventions to apply at all, use a
+<a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a>.  This is a base class of
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> which doesn't try to figure out
+anything on its own, and hence, can't make mistakes; it may make sense to
+use it when the underlying <a name="org.positronicnet.content.ContentRepository" class="extype" href="../content/ContentRepository.html">ContentRepository</a>
+is an Android <code>ContentProvider</code>, and the actual column names aren't
+under your control to begin with.</p><h4>One-to-many and many-to-one associations</h4><p>The Positronic Net ORM has some support for one-to-many and many-to-one
+associations.  (Many-to-many associations would require bypassing a lot
+of the usual Android helpers, and isn't likely to be possible for
+<code>ContentProvider</code>s, where the API simply doesn't support the required
+joins.)</p><p>The available features are perhaps best explained by example.  Let's
+say that we have a <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a> with the following
+schema:</p><pre>
+    def schemaUpdates =
+      List(&quot;&quot;&quot; create table todo_lists (
+                 _id integer primary key,
+                 name string
+               )
+           &quot;&quot;&quot;,
+           &quot;&quot;&quot; create table todo_items (
+                 _id integer primary key,
+                 todo_list_id integer,
+                 description string,
+                 is_done integer
+               )
+           &quot;&quot;&quot;)
+</pre><p>The intent obviously is that we have multiple <code>todo_lists</code>, each of
+which has its own set of <code>todo_items</code> --- those being the items whose
+<code>todo_list_id</code> column matches the <code>id</code> of the corresponding row in
+<code>todo_lists</code>.  (Some Rails influence may be perceptible here in the
+conventions regarding plurals and so forth.)</p><p>We'd like to be able to access the items given the list, and vice
+versa.  Here's an example of how that can get mapped:</p><pre>
+    case class TodoList( name: String = null,
+                         id: Long     = ManagedRecord.unsavedId )
+      extends ManagedRecord( TodoLists )
+    {
+      lazy val items = new HasMany( TodoItems )
+    }
+
+    object TodoLists extends RecordManager[ TodoList ](TodoDb(&quot;todo_lists&quot;))
+
+    case class TodoItem( todoListId: Long    = ManagedRecord.unsavedId,
+                         description: String = null,
+                         id: Long            = ManagedRecord.unsavedId )
+      extends ManagedRecord( TodoItems )
+    {
+      lazy val todoList = new BelongsTo( TodoLists )
+    }
+</pre><p>Here, <a name="org.positronicnet.orm.ManagedRecord.HasMany" class="extype" href="ManagedRecord$HasMany.html">HasMany</a> and
+<a name="org.positronicnet.orm.ManagedRecord.BelongsTo" class="extype" href="ManagedRecord$BelongsTo.html">BelongsTo</a> are nested classes
+provided by the orm.positronicnet.orm.ManagedRecord superclass.
+The <code>lazy val</code>s here are, as usual, intended to delay construction
+of these objects until someone refers to them.  Constructing them
+doesn't immediately cause any database I/O, but it still takes time
+and storage space, and if no one's going to refer to them at all,
+making them <code>lazy</code> avoids that overhead completely.</p><p>So, what the heck are these things?</p><p>The <a name="org.positronicnet.orm.ManagedRecord.HasMany" class="extype" href="ManagedRecord$HasMany.html">HasMany</a> is the more familiar
+of the two --- it's a <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>, such as we might
+get by saying</p><pre>
+    case class TodoList( ... ) extends ManagedRecord( TodoLists )
+    {
+      lazy val items = TodoItems.whereEq( &quot;todoListId&quot;, this.id )
+    }
+</pre><p>and may be watched queried as such; for instance, code like this:</p><pre>
+    myTodoList.items ! Fetch{ items =&gt; ... }
+    myTodoList.items ! AddWatcher( key ) { items =&gt; ... }
+</pre><p>works either way.  Being a <a name="org.positronicnet.orm.ManagedRecord.HasMany" class="extype" href="ManagedRecord$HasMany.html">HasMany</a>,
+though, it has two extra tricks.  First, it has a <code>create</code> method, which
+returns a new <code>TodoItem</code> with the <code>todoListId</code> prepopulated.  Thus, for
+example:</p><pre>
+    val item = myTodoList.items.create
+    val itemWithDescription = item.copy( description = &quot;Wash Dog&quot; )
+    myTodoList.items ! Save( itemWithDescription )
+</pre><p>(Note that the save gets sent to <code>mytodoList.items</code>, so that its watchers
+--- or the watchers of any other <code>TodoItem</code> sub-scope with the exact same
+conditions --- will be notified of the change.)</p><p>Second, when a <code>TodoList</code> is deleted, the
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>s use some reflection to track
+down <code>TodoItem</code>s associated with the vanishing lists, and to delete them
+as well.</p><p>The <a name="org.positronicnet.orm.ManagedRecord.BelongsTo" class="extype" href="ManagedRecord$BelongsTo.html">BelongsTo</a> is somewhat different.
+A <code>TodoItem</code> has only one parent <code>TodoList</code> at a time, so the
+org.positronicnet.orm.MangedRecord.BelongsTo object behaves as a query
+for <i>that particular list</i>.  Thus, for example,</p><pre>
+    myItem.todoList ! Fetch { list =&gt;
+      Log.d( &quot;XXX&quot;, &quot;The list's name is: &quot; + list.name )
+    }
+</pre><p>It currently supports only access to the parent record, not modifications.
+</p></div></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          
+          
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        
+
+        <div class="types members" id="types">
+              <h3>Type Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager" data-isabs="true">
+      <a id="BaseRecordManager:BaseRecordManager[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="BaseRecordManager.html"><span class="name">BaseRecordManager</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends BaseNotificationManager with Scope[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Base class for mapping of <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>s
+to and from persistent storage.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.ManagedRecord" data-isabs="true">
+      <a id="ManagedRecord:ManagedRecord"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ManagedRecord.html"><span class="name">ManagedRecord</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Abstract base class for objects that will be persisted by this ORM into some
+<a name="org.positronicnet.content.ContentRepository" class="extype" href="../content/ContentRepository.html">ContentRepository</a> (be it a
+<a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>, a <code>ContentProvider</code>, or whatever).</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.ParentSoftDeleteListener" data-isabs="true">
+      <a id="ParentSoftDeleteListener:ParentSoftDeleteListener[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="ParentSoftDeleteListener.html"><span class="name">ParentSoftDeleteListener</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Mixin for <i>child</i> records of a class which
+<a name="org.positronicnet.orm.ManagedRecord.BelongsTo" class="extype" href="ManagedRecord$BelongsTo.html">BelongsTo</a> a parent class
+which is itself subject to soft-deletion --- that is, for instance,
+<code>Item</code>s which might belong to a soft-deleted <code>List</code>.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.RecordManager" data-isabs="true">
+      <a id="RecordManager:RecordManager[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="RecordManager.html"><span class="name">RecordManager</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends BaseRecordManager[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Class for mapping of <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>s
+to and from persistent storage.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.Scope" data-isabs="true">
+      <a id="Scope:Scope[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="Scope.html"><span class="name">Scope</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends NotificationManager with NotifierDelegator[IndexedSeq[T]]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">A <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a> represents a subset of the
+<a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>s managed by some
+<a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>, which may be used
+to query and update them.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.ScopeAction" data-isabs="true">
+      <a id="ScopeAction:ScopeAction[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ScopeAction.html"><span class="name">ScopeAction</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends Action[IndexedSeq[T]]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.orm.ScopedAction" data-isabs="true">
+      <a id="ScopedAction:ScopedAction[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ScopedAction.html"><span class="name">ScopedAction</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends ScopeAction[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Utility class for declare new Scope-specific actions, to do whatever
+is defined in the corresponding <code>act</code> method.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.SoftDelete" data-isabs="true">
+      <a id="SoftDelete:SoftDelete[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="SoftDelete.html"><span class="name">SoftDelete</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends BaseRecordManager[T] with SoftDeleteScope[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Mixin for record managers, to implement &quot;soft deletion&quot;.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.SoftDeleteQueries" data-isabs="true">
+      <a id="SoftDeleteQueries:SoftDeleteQueries[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="SoftDeleteQueries.html"><span class="name">SoftDeleteQueries</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends Scope[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Mixin for <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>s on a
+<a name="org.positronicnet.orm.SoftDelete" class="extype" href="SoftDelete.html">SoftDelete</a>-supporting record class,
+to give useful information about subject records.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.SoftDeleteScope" data-isabs="true">
+      <a id="SoftDeleteScope:SoftDeleteScope[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="SoftDeleteScope.html"><span class="name">SoftDeleteScope</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends SoftDeleteQueries[T]</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.orm.UndeleteAction" data-isabs="false">
+      <a id="UndeleteAction:UndeleteAction[T]"></a>
+      <h4 class="signature">
+      <span class="kind">case class</span>
+      <span class="symbol"> 
+        <a href="UndeleteAction.html"><span class="name">UndeleteAction</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="params">(<span name="dummy">dummy: Int</span>, <span name="evidence$2">evidence$2: ClassManifest[T]</span>)</span><span class="result"> extends ScopedAction[T] with Product with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Implementation of the Undelete action; SoftDeleteActions.</p>
+    </li></ol>
+            </div>
+        
+        
+
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.orm.Actions" data-isabs="false">
+      <a id="Actions:Actions"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Actions$.html"><span class="name">Actions</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Actions that can be sent to <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>s
+and other <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>s.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.ManagedRecord" data-isabs="false">
+      <a id="ManagedRecord:ManagedRecord"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ManagedRecord$.html"><span class="name">ManagedRecord</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Companion object for the <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.ReflectUtils" data-isabs="false">
+      <a id="ReflectUtils:ReflectUtils"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ReflectUtils$.html"><span class="name">ReflectUtils</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.orm.SoftDeleteActions" data-isabs="false">
+      <a id="SoftDeleteActions:SoftDeleteActions"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="SoftDeleteActions$.html"><span class="name">SoftDeleteActions</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Actions for use with soft-deletion:  specifically, the &quot;undelete&quot; action.</p>
+    </li></ol>
+            </div>
+
+        
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    </body>
+      </html>

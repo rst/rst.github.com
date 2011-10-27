@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.positronicnet.ui</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
+      <script type="text/javascript" src="../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../lib/package_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a></p>
+        <h1>ui</h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <span class="name">ui</span>
+        
+        
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Shorthand notations for common UI tasks</p></div></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          
+          
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        
+
+        <div class="types members" id="types">
+              <h3>Type Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.ui.CursorSourceAdapter" data-isabs="true">
+      <a id="CursorSourceAdapter:CursorSourceAdapter[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="CursorSourceAdapter.html"><span class="name">CursorSourceAdapter</span></a>
+        <span class="tparams">[<span name="T">T &lt;: AnyRef</span>]</span>
+        <span class="result"> extends CursorAdapter</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Adapter for cursors produced by PositronicDb queries.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.IndexedSeqAdapter" data-isabs="false">
+      <a id="IndexedSeqAdapter:IndexedSeqAdapter[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="IndexedSeqAdapter.html"><span class="name">IndexedSeqAdapter</span></a>
+        <span class="tparams">[<span name="T">T &lt;: AnyRef</span>]</span>
+        <span class="result"> extends BaseAdapter</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Adapter for Scala <code>IndexedSeq</code>s.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.IndexedSeqSourceAdapter" data-isabs="false">
+      <a id="IndexedSeqSourceAdapter:IndexedSeqSourceAdapter[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="IndexedSeqSourceAdapter.html"><span class="name">IndexedSeqSourceAdapter</span></a>
+        <span class="tparams">[<span name="T">T &lt;: AnyRef</span>]</span>
+        <span class="result"> extends IndexedSeqAdapter[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Adapter for <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a>s which
+manage (and report changes to) Scala <code>IndexedSeq</code>s.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicActivity" data-isabs="false">
+      <a id="PositronicActivity:PositronicActivity"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicActivity.html"><span class="name">PositronicActivity</span></a>
+        
+        <span class="result"> extends Activity with PositronicActivityHelpers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Shorthand <code>android.app.Activity</code> class with
+<a name="org.positronicnet.ui.PositronicActivityHelpers" class="extype" href="PositronicActivityHelpers.html">PositronicActivityHelpers</a> mixed in, and
+some extra constructor
+arguments as a convenience.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicActivityHelpers" data-isabs="true">
+      <a id="PositronicActivityHelpers:PositronicActivityHelpers"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="PositronicActivityHelpers.html"><span class="name">PositronicActivityHelpers</span></a>
+        
+        <span class="result"> extends Activity</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Mixin trait for android acitivities which provides extra hooks
+for integrated lifecycle management.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicButton" data-isabs="false">
+      <a id="PositronicButton:PositronicButton"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicButton.html"><span class="name">PositronicButton</span></a>
+        
+        <span class="result"> extends Button with PositronicHandlers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">An <code>android.widget.Button</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
+mixed in.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicDialog" data-isabs="false">
+      <a id="PositronicDialog:PositronicDialog"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicDialog.html"><span class="name">PositronicDialog</span></a>
+        
+        <span class="result"> extends Dialog</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Shorthand <code>android.app.Dialog</code> class with some extra constructor
+arguments as a convenience.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicEditText" data-isabs="false">
+      <a id="PositronicEditText:PositronicEditText"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicEditText.html"><span class="name">PositronicEditText</span></a>
+        
+        <span class="result"> extends EditText with PositronicHandlers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">An <code>android.widget.EditText</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
+mixed in.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicHandlers" data-isabs="true">
+      <a id="PositronicHandlers:PositronicHandlers"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="PositronicHandlers.html"><span class="name">PositronicHandlers</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Mixin trait for view subclasses which provides
+&quot;JQuery-style&quot; event listener declarations.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicImageView" data-isabs="false">
+      <a id="PositronicImageView:PositronicImageView"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicImageView.html"><span class="name">PositronicImageView</span></a>
+        
+        <span class="result"> extends ImageView with PositronicHandlers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">An <code>android.widget.ImageView</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
+mixed in.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicItemHandlers" data-isabs="true">
+      <a id="PositronicItemHandlers:PositronicItemHandlers"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="PositronicItemHandlers.html"><span class="name">PositronicItemHandlers</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">&quot;JQuery-style&quot; handler declarations for AdapterView-specific events.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicLinearLayout" data-isabs="false">
+      <a id="PositronicLinearLayout:PositronicLinearLayout"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicLinearLayout.html"><span class="name">PositronicLinearLayout</span></a>
+        
+        <span class="result"> extends LinearLayout with PositronicHandlers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">An <code>android.widget.LinearLayout</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
+mixed in.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicListView" data-isabs="false">
+      <a id="PositronicListView:PositronicListView"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicListView.html"><span class="name">PositronicListView</span></a>
+        
+        <span class="result"> extends ListView with PositronicHandlers with PositronicItemHandlers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">An <code>android.widget.ListView</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
+and <a name="org.positronicnet.ui.PositronicItemHandlers" class="extype" href="PositronicItemHandlers.html">PositronicItemHandlers</a> mixed in.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicSpinner" data-isabs="false">
+      <a id="PositronicSpinner:PositronicSpinner"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicSpinner.html"><span class="name">PositronicSpinner</span></a>
+        
+        <span class="result"> extends Spinner with PositronicHandlers with PositronicItemHandlers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">An <code>android.widget.Spinner</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
+and <a name="org.positronicnet.ui.PositronicItemHandlers" class="extype" href="PositronicItemHandlers.html">PositronicItemHandlers</a> mixed in.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.PositronicTextView" data-isabs="false">
+      <a id="PositronicTextView:PositronicTextView"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicTextView.html"><span class="name">PositronicTextView</span></a>
+        
+        <span class="result"> extends TextView with PositronicHandlers</span>
+      </span>
+      </h4>
+      <p class="comment cmt">An <code>android.widget.TextView</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
+mixed in.</p>
+    </li></ol>
+            </div>
+        
+        
+
+        
+
+        
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    </body>
+      </html>

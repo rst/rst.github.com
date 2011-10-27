@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.positronicnet.notifications</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
+      <script type="text/javascript" src="../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../lib/package_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a></p>
+        <h1>notifications</h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <span class="name">notifications</span>
+        
+        
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>The <a name="org.positronicnet.notifications" class="extype" href="">notifications</a> package provides machinery to
+help &quot;business model&quot; classes (the M in MVC) communicate with UI code
+that wants to View or Control their state.  In particular, it allows
+UI components to register for updates on model state that they're
+interested in.</p><p>It also provides primitives for Actor-style concurrency management,
+so Android UI code can request a change, and some time later be notified
+of the result (via a watcher or callback), without the Activity's main
+UI thread being blocked waiting in the meantime.</p><p>The base <a name="org.positronicnet.notifications.Notifier" class="extype" href="Notifier.html">Notifier</a> trait specifies a set of actions for querying
+the state, and requesting updates when it changes.  Subclasses
+(e.g., <a name="org.positronicnet.orm.RecordManager" class="extype" href="../orm/RecordManager.html">RecordManager</a>) typically support
+other actions which request changes to happen (which may, in turn,
+cause watchers to be notified).</p><p>The primary reason for doing things in an actor-style syntax in
+Android is to deal with the fairly stringent best-practice requirements
+for Android &quot;user interface threads&quot; --- specifically, the requirement
+that they shouldn't be waiting for anything else, even local disk I/O
+(let alone, say, a network operation).  So, all that stuff needs to
+happen on background threads; we use actor style to help keep the
+concurrency manageable.</p><p>However, there are also circumstances where concurrency is a nuisance.
+For instance, an Android <code>Service</code> or <code>BroadcastReceiver</code> may want to
+be sure that an operation has completed before signalling that it has
+finished itself.</p><p>For these situations, you can also request that an action be performed
+<code>onThisThread</code>, as in</p><p>  <code>notifier.onThisThread( Fetch{ value =&gt; ... } )</code></p><p>which performs the <code>Fetch</code> and runs the body on the current thread,
+forgoing all concurrency.  (Though for this particular case, there's
+a special-case <code>fetchOnThisThread</code> method which simply fetches the
+monitored state and returns it as the value.)</p><p>As the name suggests, the notification machinery itself mainly
+handles the business of notifying other code (typically an <code>Activity</code>
+or <code>Service</code>) of current state, and providing updates.</p><p>Accordingly, these classes aren't often used directly; instead,
+you declare a subclass which actually provides something to monitor
+--- or use other facilities that do that for you.  If the state is
+held in a <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>, for instance, you might
+want to use the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a>.
+</p></div></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          
+          
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        
+
+        <div class="types members" id="types">
+              <h3>Type Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.notifications.Action" data-isabs="true">
+      <a id="Action:Action[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="Action.html"><span class="name">Action</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotificationDelegator" data-isabs="true">
+      <a id="BaseNotificationDelegator:BaseNotificationDelegator[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="BaseNotificationDelegator.html"><span class="name">BaseNotificationDelegator</span></a>
+        <span class="tparams">[<span name="T">T &lt;: NotificationManager</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Support for org.positronicnet.notifcations.NotificationManagers
+which delegate their work to another, pre-existing one.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotificationManager" data-isabs="true">
+      <a id="BaseNotificationManager:BaseNotificationManager"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="BaseNotificationManager.html"><span class="name">BaseNotificationManager</span></a>
+        
+        <span class="result"> extends BaseNotifier with NotificationManager</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Basic machinery for all library
+<a name="org.positronicnet.notifications.NotificationManager" class="extype" href="NotificationManager.html">NotificationManager</a>s
+</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotifier" data-isabs="false">
+      <a id="BaseNotifier:BaseNotifier"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="BaseNotifier.html"><span class="name">BaseNotifier</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Base class providing useful common machinery for all stock
+<a name="org.positronicnet.notifications.Notifier" class="extype" href="Notifier.html">Notifier</a> classes
+</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotifierImpl" data-isabs="true">
+      <a id="BaseNotifierImpl:BaseNotifierImpl[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="BaseNotifierImpl.html"><span class="name">BaseNotifierImpl</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends NotifierImpl[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Trait providing common machinery for all library
+<a name="org.positronicnet.notifications.Notifier" class="extype" href="Notifier.html">Notifier</a> classes.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.CachingNotifier" data-isabs="true">
+      <a id="CachingNotifier:CachingNotifier[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="CachingNotifier.html"><span class="name">CachingNotifier</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends BaseNotifierImpl[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Notifier machinery which sends the same copy of its state to all watchers.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NonSharedNotifier" data-isabs="true">
+      <a id="NonSharedNotifier:NonSharedNotifier[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="NonSharedNotifier.html"><span class="name">NonSharedNotifier</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends BaseNotifierImpl[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Notifier machinery which sends a separate copy of its state to each watcher.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NonSharedValueNotifier" data-isabs="false">
+      <a id="NonSharedValueNotifier:NonSharedValueNotifier[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="NonSharedValueNotifier.html"><span class="name">NonSharedValueNotifier</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends BaseNotifier with NonSharedNotifier[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Notifier class which sends a separate copy of its state to each watcher.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NonSharedValueQuery" data-isabs="false">
+      <a id="NonSharedValueQuery:NonSharedValueQuery[Q, R]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="NonSharedValueQuery.html"><span class="name">NonSharedValueQuery</span></a>
+        <span class="tparams">[<span name="Q">Q</span>, <span name="R">R</span>]</span>
+        <span class="result"> extends BaseNotifier with NotifierWithQuery[Q, R] with NonSharedNotifier[R]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">&quot;Query&quot; class which sends a separate copy of its state to each watcher.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NotificationManager" data-isabs="true">
+      <a id="NotificationManager:NotificationManager"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="NotificationManager.html"><span class="name">NotificationManager</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Interface for an object which manages multiple notifiers.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.Notifier" data-isabs="true">
+      <a id="Notifier:Notifier[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="Notifier.html"><span class="name">Notifier</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Basic trait for actor-like objects which manage state of type <code>T</code>.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NotifierAction" data-isabs="true">
+      <a id="NotifierAction:NotifierAction[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="NotifierAction.html"><span class="name">NotifierAction</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends Action[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Base class for all notifier actions.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NotifierDelegator" data-isabs="true">
+      <a id="NotifierDelegator:NotifierDelegator[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="NotifierDelegator.html"><span class="name">NotifierDelegator</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends Notifier[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Machinery for Notifiers which just delegate to some other Notifier.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NotifierImpl" data-isabs="true">
+      <a id="NotifierImpl:NotifierImpl[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="NotifierImpl.html"><span class="name">NotifierImpl</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends Notifier[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Base class for all library Notifiers.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.NotifierWithQuery" data-isabs="true">
+      <a id="NotifierWithQuery:NotifierWithQuery[Q, R]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="NotifierWithQuery.html"><span class="name">NotifierWithQuery</span></a>
+        <span class="tparams">[<span name="Q">Q</span>, <span name="R">R</span>]</span>
+        <span class="result"> extends BaseNotifierImpl[R]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Subclass of <a name="org.positronicnet.notifications.Notifier" class="extype" href="Notifier.html">Notifier</a> which
+typically represents a query on some underlying resource.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.ValueNotifier" data-isabs="false">
+      <a id="ValueNotifier:ValueNotifier[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ValueNotifier.html"><span class="name">ValueNotifier</span></a>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result"> extends BaseNotifier with CachingNotifier[T]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Notifier class which sends the same copy of its state to all watchers.</p>
+    </li><li visbl="pub" name="org.positronicnet.notifications.ValueQuery" data-isabs="false">
+      <a id="ValueQuery:ValueQuery[Q, R]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ValueQuery.html"><span class="name">ValueQuery</span></a>
+        <span class="tparams">[<span name="Q">Q</span>, <span name="R">R</span>]</span>
+        <span class="result"> extends BaseNotifier with NotifierWithQuery[Q, R]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">&quot;Query&quot; class which sends the same copy of its state to all watchers.</p>
+    </li></ol>
+            </div>
+        
+        
+
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.notifications.Actions" data-isabs="false">
+      <a id="Actions:Actions"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Actions$.html"><span class="name">Actions</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Actions that can be sent to org.positronicnet.notifications.Notifers.</p>
+    </li><li visbl="prt" name="org.positronicnet.notifications.CallbackManager" data-isabs="false">
+      <a id="CallbackManager:CallbackManager"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="CallbackManager$.html"><span class="name">CallbackManager</span></a>
+        
+        <span class="result"> extends ThreadLocal[Handler]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>] </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    </body>
+      </html>

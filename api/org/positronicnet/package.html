@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.positronicnet</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../lib/template.css" />
+      <script type="text/javascript" src="../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../lib/package_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../package.html">org</a></p>
+        <h1>positronicnet</h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <span class="name">positronicnet</span>
+        
+        
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>The Positronic Net framework tries to make Android programming in Scala
+more pleasant, by providing shorthand notations for common tasks, in
+the <a name="org.positronicnet.ui" class="extype" href="ui/package.html">ui</a> and elsewhere (without
+hiding the platform API if you prefer it, or want to do something for
+which there's no shorthand), and providing cleaner abstractions for
+dealing with persistent storage (via the <a name="org.positronicnet.content" class="extype" href="content/package.html">content</a>
+abstractions, and the <a name="org.positronicnet.orm" class="extype" href="orm/package.html">orm</a>).</p><p>See below for details.
+</p></div></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          
+          
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        
+
+        
+        
+        
+
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.content" data-isabs="false">
+      <a id="content:content"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="content/package.html"><span class="name">content</span></a>
+        
+        
+      </span>
+      </h4>
+      <p class="comment cmt">The <code>org.positronicnet.content</code> package provides common infrastructure,
+and a common fluid interface, for
+accessing both SQLite Databases (via the <a name="org.positronicnet.db.Database" class="extype" href="db/Database.html">Database</a>
+class) and Android <code>ContentProvider</code>s (via
+<a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="content/PositronicContentResolver.html">PositronicContentResolver</a>).</p>
+    </li><li visbl="pub" name="org.positronicnet.db" data-isabs="false">
+      <a id="db:db"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="db/package.html"><span class="name">db</span></a>
+        
+        
+      </span>
+      </h4>
+      <p class="comment cmt">Positronic Net support for database operations; see the
+<a name="org.positronicnet.db.Database" class="extype" href="db/Database.html">Database</a> class for an overview.</p>
+    </li><li visbl="pub" name="org.positronicnet.facility" data-isabs="false">
+      <a id="facility:facility"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="facility/package.html"><span class="name">facility</span></a>
+        
+        
+      </span>
+      </h4>
+      <p class="comment cmt">Utilities for resource management</p>
+    </li><li visbl="pub" name="org.positronicnet.libresources" data-isabs="false">
+      <a id="libresources:libresources"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="libresources/package.html"><span class="name">libresources</span></a>
+        
+        
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.notifications" data-isabs="false">
+      <a id="notifications:notifications"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="notifications/package.html"><span class="name">notifications</span></a>
+        
+        
+      </span>
+      </h4>
+      <p class="comment cmt">The <a name="org.positronicnet.notifications" class="extype" href="notifications/package.html">notifications</a> package provides machinery to
+help &quot;business model&quot; classes (the M in MVC) communicate with UI code
+that wants to View or Control their state.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm" data-isabs="false">
+      <a id="orm:orm"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="orm/package.html"><span class="name">orm</span></a>
+        
+        
+      </span>
+      </h4>
+      <p class="comment cmt">The Positronic Net ORM tries to abstract away a lot of the boilerplate
+involved in dealing with data managed through cursors (or, more
+precisely, any data which can be accessed through a
+<a name="org.positronicnet.content.ContentRepository" class="extype" href="content/ContentRepository.html">ContentRepository</a>; that currently
+includes both SQLite <a name="org.positronicnet.db.Database" class="extype" href="db/Database.html">Database</a>s and
+Android <code>ContentProvider</code>s, via
+<a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="content/PositronicContentResolver.html">PositronicContentResolver</a> --- though
+ContentProvider support is currently less than perfect, due to lack
+of support for batched updates.</p>
+    </li><li visbl="pub" name="org.positronicnet.testsupport" data-isabs="false">
+      <a id="testsupport:testsupport"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="testsupport/package.html"><span class="name">testsupport</span></a>
+        
+        
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.ui" data-isabs="false">
+      <a id="ui:ui"></a>
+      <h4 class="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <a href="ui/package.html"><span class="name">ui</span></a>
+        
+        
+      </span>
+      </h4>
+      <p class="comment cmt">Shorthand notations for common UI tasks</p>
+    </li></ol>
+            </div>
+
+        
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    </body>
+      </html>

@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.positronicnet.content</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
+      <script type="text/javascript" src="../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+    
+        </head>
+        <body class="value">
+      <div id="definition">
+        <img src="../../../lib/package_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a></p>
+        <h1>content</h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <span class="name">content</span>
+        
+        
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>The <code>org.positronicnet.content</code> package provides common infrastructure,
+and a common fluid interface, for
+accessing both SQLite Databases (via the <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>
+class) and Android <code>ContentProvider</code>s (via
+<a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="PositronicContentResolver.html">PositronicContentResolver</a>).  This interface
+is also used by the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a> package, which provides
+a common higher-level structure for accessing the same resources, where
+it proves convenient.</p><p>The user-visible facilities of the infrastructure consist largely of
+the fluid interface for queries.  A brief example:  Suppose you have
+a <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a> declared as follows:</p><pre>
+    class TodoDatabase( filename: String )
+      extends Database( filename = filename, logTag = &quot;todo&quot; )
+    {
+      def schemaUpdates =
+        List(&quot;&quot;&quot; create table todo_items (
+                   _id int identity,
+                   todo_list_name varchar(100),
+                   description varchar(100),
+                   is_done integer
+                 )
+             &quot;&quot;&quot;)
+    }
+</pre><p>Then <code>TodoDatabase(&quot;todo_items&quot;)</code> will yield a
+<a name="org.positronicnet.content.ContentQuery" class="extype" href="ContentQuery.html">ContentQuery</a> object which can be used to
+manipulate the rows of the <code>todo_items</code> table in the following ways:</p><pre>
+    // get query for &quot;all the items&quot;
+
+    val qry = TodoDatabase(&quot;todo_items&quot;)
+
+    // From that, get a query for &quot;all items on one list&quot;
+
+    val bigListItems = qry.whereEq( &quot;todo_list_name&quot; -&gt; &quot;big list&quot; )
+
+    // Do a few things with that.  Note that on insert, the
+    // column values are *not* defaulted from the conditions.
+
+    val newId = bigListItems.insert( &quot;todo_list_name&quot; -&gt; &quot;big list&quot;,
+                                     &quot;description&quot; -&gt; &quot;write docs&quot;,
+                                     &quot;is_done&quot; -&gt; false )
+    bigListItems.where( &quot;_id &lt; ?&quot;, 50 ).update( &quot;is_done&quot; -&gt; true )
+    bigListItems.whereEq( &quot;is_done&quot; -&gt; true ).delete
+</pre><p><a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="PositronicContentResolver.html">PositronicContentResolver</a> can be used
+to deal with Android ContentProviders in a similar style.
+</p></div></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          
+          
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        
+
+        <div class="types members" id="types">
+              <h3>Type Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.content.ContentProviderQuery" data-isabs="false">
+      <a id="ContentProviderQuery:ContentProviderQuery[IdType]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ContentProviderQuery.html"><span class="name">ContentProviderQuery</span></a>
+        <span class="tparams">[<span name="IdType">IdType</span>]</span>
+        <span class="result"> extends ContentQuery[Uri, IdType]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Queries on ContentProviders.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.ContentQuery" data-isabs="true">
+      <a id="ContentQuery:ContentQuery[SourceType, IdType]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ContentQuery.html"><span class="name">ContentQuery</span></a>
+        <span class="tparams">[<span name="SourceType">SourceType</span>, <span name="IdType">IdType</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Query on an arbitrary content source.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.ContentRepository" data-isabs="true">
+      <a id="ContentRepository:ContentRepository[SourceType, IdType]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="ContentRepository.html"><span class="name">ContentRepository</span></a>
+        <span class="tparams">[<span name="SourceType">SourceType</span>, <span name="IdType">IdType</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Generic interface to &quot;content repositories&quot;, including databases
+and ContentResolvers.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.ContentValue" data-isabs="true">
+      <a id="ContentValue:ContentValue"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ContentValue.html"><span class="name">ContentValue</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Abstract wrapper for any value that can be stored in a field
+of a data source in a <a name="org.positronicnet.content.ContentRepository" class="extype" href="ContentRepository.html">ContentRepository</a> ---
+currently, a SQLite database or Android ContentProvider.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.CursorWrapper" data-isabs="false">
+      <a id="CursorWrapper:CursorWrapper"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="CursorWrapper.html"><span class="name">CursorWrapper</span></a>
+        
+        <span class="result"> extends Cursor</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Wrapper around standard Android cursors, available as a base class
+for extensions.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.CvBoolean" data-isabs="false">
+      <a id="CvBoolean:CvBoolean"></a>
+      <h4 class="signature">
+      <span class="kind">case class</span>
+      <span class="symbol"> 
+        <a href="CvBoolean.html"><span class="name">CvBoolean</span></a>
+        
+        <span class="params">(<span name="value">value: Boolean</span>)</span><span class="result"> extends ContentValue with Product with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Booleans as <a name="org.positronicnet.content.ContentValue" class="extype" href="ContentValue.html">ContentValue</a>s.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.CvDouble" data-isabs="false">
+      <a id="CvDouble:CvDouble"></a>
+      <h4 class="signature">
+      <span class="kind">case class</span>
+      <span class="symbol"> 
+        <a href="CvDouble.html"><span class="name">CvDouble</span></a>
+        
+        <span class="params">(<span name="value">value: Double</span>)</span><span class="result"> extends ContentValue with Product with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Doubles as <a name="org.positronicnet.content.ContentValue" class="extype" href="ContentValue.html">ContentValue</a>s</p>
+    </li><li visbl="pub" name="org.positronicnet.content.CvFloat" data-isabs="false">
+      <a id="CvFloat:CvFloat"></a>
+      <h4 class="signature">
+      <span class="kind">case class</span>
+      <span class="symbol"> 
+        <a href="CvFloat.html"><span class="name">CvFloat</span></a>
+        
+        <span class="params">(<span name="value">value: Float</span>)</span><span class="result"> extends ContentValue with Product with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Floats as <a name="org.positronicnet.content.ContentValue" class="extype" href="ContentValue.html">ContentValue</a>s</p>
+    </li><li visbl="pub" name="org.positronicnet.content.CvInt" data-isabs="false">
+      <a id="CvInt:CvInt"></a>
+      <h4 class="signature">
+      <span class="kind">case class</span>
+      <span class="symbol"> 
+        <a href="CvInt.html"><span class="name">CvInt</span></a>
+        
+        <span class="params">(<span name="value">value: Int</span>)</span><span class="result"> extends ContentValue with Product with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Ints as <a name="org.positronicnet.content.ContentValue" class="extype" href="ContentValue.html">ContentValue</a>s</p>
+    </li><li visbl="pub" name="org.positronicnet.content.CvLong" data-isabs="false">
+      <a id="CvLong:CvLong"></a>
+      <h4 class="signature">
+      <span class="kind">case class</span>
+      <span class="symbol"> 
+        <a href="CvLong.html"><span class="name">CvLong</span></a>
+        
+        <span class="params">(<span name="value">value: Long</span>)</span><span class="result"> extends ContentValue with Product with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Longs as <a name="org.positronicnet.content.ContentValue" class="extype" href="ContentValue.html">ContentValue</a>s</p>
+    </li><li visbl="pub" name="org.positronicnet.content.CvString" data-isabs="false">
+      <a id="CvString:CvString"></a>
+      <h4 class="signature">
+      <span class="kind">case class</span>
+      <span class="symbol"> 
+        <a href="CvString.html"><span class="name">CvString</span></a>
+        
+        <span class="params">(<span name="value">value: String</span>)</span><span class="result"> extends ContentValue with Product with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Strings as <a name="org.positronicnet.content.ContentValue" class="extype" href="ContentValue.html">ContentValue</a>s</p>
+    </li><li visbl="pub" name="org.positronicnet.content.LongIdContentResolverRepository" data-isabs="false">
+      <a id="LongIdContentResolverRepository:LongIdContentResolverRepository"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="LongIdContentResolverRepository.html"><span class="name">LongIdContentResolverRepository</span></a>
+        
+        <span class="result"> extends BaseContentResolverRepo[Long]</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.content.PositronicContentResolver" data-isabs="false">
+      <a id="PositronicContentResolver:PositronicContentResolver"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicContentResolver.html"><span class="name">PositronicContentResolver</span></a>
+        
+        <span class="result"> extends AppFacility</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Simple <a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a> for interacting with
+Android ContentProviders using the Positronic Net
+<a name="org.positronicnet.content.ContentQuery" class="extype" href="ContentQuery.html">ContentQuery</a> convenience shorthands,
+or the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a>.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.PositronicCursor" data-isabs="false">
+      <a id="PositronicCursor:PositronicCursor"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="PositronicCursor.html"><span class="name">PositronicCursor</span></a>
+        
+        <span class="result"> extends CursorWrapper</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Wrapper around cursors to support <code>foreach</code> and <code>map</code>, so you can do, e.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.UriIdContentResolverRepository" data-isabs="false">
+      <a id="UriIdContentResolverRepository:UriIdContentResolverRepository"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="UriIdContentResolverRepository.html"><span class="name">UriIdContentResolverRepository</span></a>
+        
+        <span class="result"> extends BaseContentResolverRepo[Uri]</span>
+      </span>
+      </h4>
+      
+    </li></ol>
+            </div>
+        
+        
+
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.content.ContentValue" data-isabs="false">
+      <a id="ContentValue:ContentValue"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ContentValue$.html"><span class="name">ContentValue</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Companion object for the org.positronicnet.org.ContentValue class.</p>
+    </li></ol>
+            </div>
+
+        
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    </body>
+      </html>
