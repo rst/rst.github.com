@@ -36,7 +36,6 @@ Linux, should also work on Mac):
   {% highlight sh %}
     ~/src$ git clone https://github.com/jberkel/android-plugin.git
     ~/src$ cd android-plugin
-    ~/src/android-plugin$ git checkout sbt_011
     ~/src/android-plugin$ sbt publish-local
   {% endhighlight %}
 
