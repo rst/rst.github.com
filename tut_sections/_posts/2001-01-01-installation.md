@@ -28,16 +28,8 @@ Linux, should also work on Mac):
     ~/src$ export ANDROID_SDK_HOME=/home/.../android-sdk-...
   {% endhighlight %}
 
-* Download and install `sbt` version 0.11.0, per
+* Download and install `sbt` version 0.11.1 or better, per
   [instructions](https://github.com/harrah/xsbt/wiki/Setup).
-
-* Download and install the sbt-android plugin.  As of this writing,
-  that requires building from source (and choosing the 0.11 branch):
-  {% highlight sh %}
-    ~/src$ git clone https://github.com/jberkel/android-plugin.git
-    ~/src$ cd android-plugin
-    ~/src/android-plugin$ sbt publish-local
-  {% endhighlight %}
 
 * Download and install the Positronic Net library itself:
   {% highlight sh %}
