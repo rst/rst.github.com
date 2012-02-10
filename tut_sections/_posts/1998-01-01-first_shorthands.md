@@ -170,7 +170,7 @@ On to the adapter.  What we have right now is an adapter for an
 at startup, and every time the underlying sequence changes:
 
 {% highlight scala %}
-    val adapter: IndexedSeqAdapter[ TodoItem ] = 
+    val adapter = 
       new IndexedSeqAdapter(
         IndexedSeq.empty,
         itemViewResourceId = android.R.layout.simple_list_item_1 )
@@ -183,7 +183,7 @@ guessed, we've got one:
 {% highlight scala %}
   onCreate {
     ...
-    val adapter: IndexedSeqSourceAdapter[ TodoItem ] = 
+    val adapter = 
       new IndexedSeqSourceAdapter(
         this, TodoItems,
         itemViewResourceId = android.R.layout.simple_list_item_1 )
@@ -392,19 +392,19 @@ object TR {
 ...
 {% endhighlight %}
 
-That defines a `TypedResource` type, with a generic type parameter,
+It also defines a `TypedResource` type, with a generic type parameter,
 and a bunch of constants of that type.  So, for instance, `TR.addButton`
 is defined as a `TypedResource[PositronicButton]`, and `TR.addButton.id`
-is the same as `R.id.addButton`.  With that, we can define a utility trait:
+is the same as `R.id.addButton`.  Lastly, it defines a utility trait:
 
 {% highlight scala %}
-trait ViewHolder {
+trait TypedViewHolder {
   def findViewById( id: Int ): View
-  def findView[T]( t: TypedResource[T] ) = findViewById( t.id ).asInstanceOf[T]
+  def findView[T](tr: TypedResource[T]) = findViewById(tr.id).asInstanceOf[T]
 }
 {% endhighlight %}
 
-and mix it into our activity --- giving it a `findView` method which
+which we can mix into our activity --- giving it a `findView` method which
 eliminates the casts, without sacrificing type safety:
 
 {% highlight scala %}
@@ -447,13 +447,13 @@ With all the above changes, we've finally gotten to the version of the
 
 {% highlight scala %}
 class TodoItemsActivity 
-  extends Activity with PositronicActivityHelpers with ViewHolder
+  extends Activity with PositronicActivityHelpers with TypedViewHolder
 {
   onCreate {
     setContentView( R.layout.todo_items )
     useAppFacility( TodoDb )
 
-    val adapter: IndexedSeqSourceAdapter[ TodoItem ] = 
+    val adapter = 
       new IndexedSeqSourceAdapter(
         this, TodoItem,
         itemViewResourceId = android.R.layout.simple_list_item_1 )

@@ -30,13 +30,13 @@ code is reduced to this:
 
 {% highlight scala %}
 class TodoItemsActivity 
-  extends Activity with PositronicActivityHelpers with ViewHolder
+  extends Activity with PositronicActivityHelpers with TypedViewHolder
 {
   onCreate {
     setContentView( R.layout.todo_items )
     useAppFacility( TodoDb )
 
-    val adapter: IndexedSeqSourceAdapter[ TodoItem ] = 
+    val adapter =
       new IndexedSeqSourceAdapter(
         this, TodoItem,
         itemViewResourceId = android.R.layout.simple_list_item_1 )

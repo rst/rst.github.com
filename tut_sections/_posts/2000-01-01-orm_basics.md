@@ -34,7 +34,7 @@ database would be a `String` with the description of the task, and a
 `Long` (to match SQLite conventions) for a database row ID.  Thus:
 
 {% highlight scala %}
-case class TodoItem( description: String, id: Long )
+case class TodoItem( description: String, id: RecordId[TodoItem] )
 {
   def setDescription( s: String ) = this.copy( description = s )
   override def toString = this.description
@@ -47,7 +47,8 @@ fields, and the `copy` method that you can see used here.  (It also
 allows class instances to be used with a pattern-matching facility
 which we won't be using here, which gives rise to the name.)   The
 objects are also immutable --- if you want to change them, you make a
-copy with new values.
+copy with new values.  (And the `RecordId` is a wrapped version of the
+`Long` ID assigned by the database manager; more on these in a moment.)
 
 <div class="qanote">
  <a class="question">Do they really have to be immutable?</a>
@@ -122,14 +123,15 @@ singleton object of class `RecordManager`, which is tied to the
 
 {% highlight scala %}
 case class TodoItem( description: String = null, 
-                     id: Long            = ManagedRecord.unsavedId )
-  extends ManagedRecord( TodoItems )
+                     id: RecordId[TodoItem] = TodoItems.unsavedId
+                   )
+  extends ManagedRecord
 {
   def setDescription( s: String ) = this.copy( description = s )
   override def toString = this.description
 }
 
-object TodoItem extends RecordManager[ TodoItem ]( TodoDb( "todo_items" ))
+object TodoItems extends RecordManager[ TodoItem ]( TodoDb( "todo_items" ))
 {% endhighlight %}
 
 A few things have been added here:  some obvious, one subtle.
