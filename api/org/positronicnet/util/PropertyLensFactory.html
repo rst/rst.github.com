@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>org.positronicnet.orm.ManagedRecord.BelongsTo</title>
+          <title>org.positronicnet.util.PropertyLensFactory</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
@@ -14,33 +14,23 @@
         </head>
         <body class="type">
       <div id="definition">
-        <img src="../../../lib/class_big.png" />
-        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>.<a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a></p>
-        <h1>BelongsTo</h1>
+        <a title="Go to companion" href="PropertyLensFactory$.html"><img src="../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.util" class="extype" href="package.html">util</a></p>
+        <h1><a title="Go to companion" href="PropertyLensFactory$.html">PropertyLensFactory</a></h1>
       </div>
 
       <h4 class="signature" id="signature">
       <span class="kind">class</span>
       <span class="symbol"> 
-        <span class="name">BelongsTo</span>
-        <span class="tparams">[<span name="T">T &lt;: <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a></span>]</span>
-        <span class="result"> extends <span name="org.positronicnet.orm.ManagedRecord.BelongsToImpl" class="extype">BelongsToImpl</span>[T]</span>
+        <span class="name">PropertyLensFactory</span>
+        <span class="tparams">[<span name="V">V</span>]</span>
+        <span class="result"> extends AnyRef</span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Many-to-one association.  See discussion in the
-<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a> overview.  Note that the
-<code>foreignKey</code> need not be supplied if it follows common conventions.
-(If the class the <code>BelongsTo</code> refers to is named <code>ParentClass</code>, the
-conventional foreign key field is the one whose Scala name is
-<code>parentClassId</code>, in the &quot;child&quot; class.  That is, if a <code>TodoItem</code>
-belongs to a <code>TodoList</code>, the convention is for <code>TodoItem</code> to have
-a <code>todoListId</code>, and that's what we use.)</p><p>Otherwise it must be the column name for the
-org.positronicnet.orm.ContentRepository, not the name of the
-corresponding Scala record field.
-</p></div><div class="toggleContainer block">
+          <div class="fullcommenttop" id="comment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span name="org.positronicnet.orm.ManagedRecord.BelongsToImpl" class="extype">BelongsToImpl</span>[T], <a name="org.positronicnet.notifications.CachingNotifier" class="extype" href="../notifications/CachingNotifier.html">CachingNotifier</a>[T], <a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a>[T], <a name="org.positronicnet.notifications.NotifierImpl" class="extype" href="../notifications/NotifierImpl.html">NotifierImpl</a>[T], <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a>[T], <a name="org.positronicnet.notifications.BaseNotifier" class="extype" href="../notifications/BaseNotifier.html">BaseNotifier</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
         
 
@@ -56,7 +46,7 @@ corresponding Scala record field.
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="org.positronicnet.orm.ManagedRecord.BelongsTo" class="in"><span>BelongsTo</span></li><li name="org.positronicnet.orm.ManagedRecord.BelongsToImpl" class="in"><span>BelongsToImpl</span></li><li name="org.positronicnet.notifications.CachingNotifier" class="in"><span>CachingNotifier</span></li><li name="org.positronicnet.notifications.BaseNotifierImpl" class="in"><span>BaseNotifierImpl</span></li><li name="org.positronicnet.notifications.NotifierImpl" class="in"><span>NotifierImpl</span></li><li name="org.positronicnet.notifications.Notifier" class="in"><span>Notifier</span></li><li name="org.positronicnet.notifications.BaseNotifier" class="in"><span>BaseNotifier</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="org.positronicnet.util.PropertyLensFactory" class="in"><span>PropertyLensFactory</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -66,36 +56,14 @@ corresponding Scala record field.
 
         <div class="members" id="constructors">
               <h3>Instance Constructors</h3>
-              <ol><li visbl="pub" name="org.positronicnet.orm.ManagedRecord.BelongsTo#this" data-isabs="false">
-      <a id="this:BelongsTo[T]"></a>
+              <ol><li visbl="pub" name="org.positronicnet.util.PropertyLensFactory#this" data-isabs="false">
+      <a id="this:PropertyLensFactory[V]"></a>
       <h4 class="signature">
       <span class="kind">new</span>
       <span class="symbol"> 
-        <span class="name">BelongsTo</span>
+        <span class="name">PropertyLensFactory</span>
         
-        <span class="params">(<span name="src">src: <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>[T]</span>, <span name="foreignKey">foreignKey: String</span>)</span>
-      </span>
-      </h4>
-      
-    </li><li visbl="pub" name="org.positronicnet.orm.ManagedRecord.BelongsTo#this" data-isabs="false">
-      <a id="this:BelongsTo[T]"></a>
-      <h4 class="signature">
-      <span class="kind">new</span>
-      <span class="symbol"> 
-        <span class="name">BelongsTo</span>
-        
-        <span class="params">(<span name="src">src: <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>[T]</span>)</span>
-      </span>
-      </h4>
-      
-    </li><li visbl="pub" name="org.positronicnet.orm.ManagedRecord.BelongsTo#this" data-isabs="false">
-      <a id="this:BelongsTo[T]"></a>
-      <h4 class="signature">
-      <span class="kind">new</span>
-      <span class="symbol"> 
-        <span class="name">BelongsTo</span>
-        
-        <span class="params">(<span name="src">src: <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>[T]</span>, <span name="foreignKeyField">foreignKeyField: <span name="org.positronicnet.orm.MappedField" class="extype">MappedField</span></span>)</span>
+        <span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: ClassManifest[V]</span>)</span>
       </span>
       </h4>
       
@@ -104,26 +72,47 @@ corresponding Scala record field.
 
         
         
-        
-
         <div class="values members" id="values">
-              <h3>Value Members</h3>
-              <ol><li visbl="pub" name="org.positronicnet.notifications.BaseNotifierImpl#!" data-isabs="false">
-      <a id="!(Action[T]):Unit"></a>
+              <h3>Abstract Value Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.util.PropertyLensFactory#vFromObject" data-isabs="true">
+      <a id="vFromObject(AnyRef):V"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">!</span>
+        <span class="name">vFromObject</span>
         
-        <span class="params">(<span name="action">action: <a name="org.positronicnet.notifications.Action" class="extype" href="../notifications/Action.html">Action</a>[T]</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+        <span class="params">(<span name="obj">obj: AnyRef</span>)</span><span class="result">: V</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Perform the <code>action</code>, usually on a worker thread associated with this
-notifier.</p><div class="fullcomment"><div class="comment cmt"><p>Perform the <code>action</code>, usually on a worker thread associated with this
-notifier.  Results may be posted back to the calling thread, viz.
-the conventions documented in org.positronicnet.notifications.Actions.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a> → <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a></dd></dl></div>
-    </li><li visbl="pub" name="scala.AnyRef#!=" data-isabs="false">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.util.PropertyLensFactory#vIntoField" data-isabs="true">
+      <a id="vIntoField(AnyRef,Field,V):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">vIntoField</span>
+        
+        <span class="params">(<span name="obj">obj: AnyRef</span>, <span name="f">f: <span name="java.lang.reflect.Field" class="extype">Field</span></span>, <span name="value">value: V</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.util.PropertyLensFactory#vToObject" data-isabs="true">
+      <a id="vToObject(V):AnyRef"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">vToObject</span>
+        
+        <span class="params">(<span name="v">v: V</span>)</span><span class="result">: AnyRef</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li></ol>
+            </div>
+
+        <div class="values members" id="values">
+              <h3>Concrete Value Members</h3>
+              <ol><li visbl="pub" name="scala.AnyRef#!=" data-isabs="false">
       <a id="!=(AnyRef):Boolean"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -189,28 +178,17 @@ the conventions documented in org.positronicnet.notifications.Actions.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.notifications.CachingNotifier#cachedValue" data-isabs="false">
-      <a id="cachedValue:T"></a>
+    </li><li visbl="pub" name="org.positronicnet.util.PropertyLensFactory#buildLens" data-isabs="false">
+      <a id="buildLens[T&lt;:AnyRef](Class[T],String):Option[PropertyLens[T, V]]"></a>
       <h4 class="signature">
-      <span class="kind">var</span>
+      <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">cachedValue</span>
-        
-        <span class="result">: T</span>
+        <span class="name">buildLens</span>
+        <span class="tparams">[<span name="T">T &lt;: AnyRef</span>]</span>
+        <span class="params">(<span name="klass">klass: Class[T]</span>, <span name="prop">prop: String</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[<a name="org.positronicnet.util.PropertyLens" class="extype" href="PropertyLens.html">PropertyLens</a>[T, V]]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.CachingNotifier" class="extype" href="../notifications/CachingNotifier.html">CachingNotifier</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.notifications.BaseNotifierImpl#changeHandlers" data-isabs="false">
-      <a id="changeHandlers:HashMap[AnyRef, (T) ⇒ Unit]"></a>
-      <h4 class="signature">
-      <span class="kind">val</span>
-      <span class="symbol"> 
-        <span class="name">changeHandlers</span>
-        
-        <span class="result">: <span name="scala.collection.mutable.HashMap" class="extype">HashMap</span>[AnyRef, (T) ⇒ <span name="scala.Unit" class="extype">Unit</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a></dd></dl></div>
+      
     </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
       <a id="clone():AnyRef"></a>
       <h4 class="signature">
@@ -225,17 +203,6 @@ the conventions documented in org.positronicnet.notifications.Actions.
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.ManagedRecord.BelongsToImpl#currentValue" data-isabs="false">
-      <a id="currentValue:T"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">currentValue</span>
-        
-        <span class="result">: T</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>BelongsToImpl → <a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -258,17 +225,6 @@ the conventions documented in org.positronicnet.notifications.Actions.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotifierImpl#fetchOnThisThread" data-isabs="false">
-      <a id="fetchOnThisThread:T"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">fetchOnThisThread</span>
-        
-        <span class="result">: T</span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Synchronously fetch the value being monitored by this <code>Notifier</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Synchronously fetch the value being monitored by this <code>Notifier</code>.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a> → <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a></dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -283,6 +239,28 @@ the conventions documented in org.positronicnet.notifications.Actions.
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.util.PropertyLensFactory#forProperty" data-isabs="false">
+      <a id="forProperty[T&lt;:AnyRef](Class[T],String):Option[PropertyLens[T, V]]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">forProperty</span>
+        <span class="tparams">[<span name="T">T &lt;: AnyRef</span>]</span>
+        <span class="params">(<span name="klass">klass: Class[T]</span>, <span name="prop">prop: String</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[<a name="org.positronicnet.util.PropertyLens" class="extype" href="PropertyLens.html">PropertyLens</a>[T, V]]</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.util.PropertyLensFactory#forProperty" data-isabs="false">
+      <a id="forProperty[T&lt;:ReflectiveProperties](String)(ClassManifest[T]):Option[PropertyLens[T, V]]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">forProperty</span>
+        <span class="tparams">[<span name="T">T &lt;: <a name="org.positronicnet.util.ReflectiveProperties" class="extype" href="ReflectiveProperties.html">ReflectiveProperties</a></span>]</span>
+        <span class="params">(<span name="prop">prop: String</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: ClassManifest[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[<a name="org.positronicnet.util.PropertyLens" class="extype" href="PropertyLens.html">PropertyLens</a>[T, V]]</span>
+      </span>
+      </h4>
+      
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -327,17 +305,6 @@ the conventions documented in org.positronicnet.notifications.Actions.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.notifications.CachingNotifier#noteChange" data-isabs="false">
-      <a id="noteChange:Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">noteChange</span>
-        
-        <span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.CachingNotifier" class="extype" href="../notifications/CachingNotifier.html">CachingNotifier</a> → <a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a> → <a name="org.positronicnet.notifications.NotifierImpl" class="extype" href="../notifications/NotifierImpl.html">NotifierImpl</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#notify" data-isabs="false">
       <a id="notify():Unit"></a>
       <h4 class="signature">
@@ -360,29 +327,6 @@ the conventions documented in org.positronicnet.notifications.Actions.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotifierImpl#onThisThread" data-isabs="false">
-      <a id="onThisThread(Action[T]):Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">onThisThread</span>
-        
-        <span class="params">(<span name="action">action: <a name="org.positronicnet.notifications.Action" class="extype" href="../notifications/Action.html">Action</a>[T]</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Perform the <code>action</code>, synchronously on the calling thread.</p><div class="fullcomment"><div class="comment cmt"><p>Perform the <code>action</code>, synchronously on the calling thread.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a> → <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a></dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotifier#onThread" data-isabs="false">
-      <a id="onThread(⇒ Unit):Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">onThread</span>
-        
-        <span class="params">(<span name="thunk">thunk: ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.BaseNotifier" class="extype" href="../notifications/BaseNotifier.html">BaseNotifier</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -450,19 +394,7 @@ the conventions documented in org.positronicnet.notifications.Actions.
     </li></ol>
             </div>
 
-        <div name="org.positronicnet.orm.ManagedRecord.BelongsToImpl" class="parent">
-              <h3>Inherited from <span name="org.positronicnet.orm.ManagedRecord.BelongsToImpl" class="extype">BelongsToImpl</span>[T]</h3>
-            </div><div name="org.positronicnet.notifications.CachingNotifier" class="parent">
-              <h3>Inherited from <a name="org.positronicnet.notifications.CachingNotifier" class="extype" href="../notifications/CachingNotifier.html">CachingNotifier</a>[T]</h3>
-            </div><div name="org.positronicnet.notifications.BaseNotifierImpl" class="parent">
-              <h3>Inherited from <a name="org.positronicnet.notifications.BaseNotifierImpl" class="extype" href="../notifications/BaseNotifierImpl.html">BaseNotifierImpl</a>[T]</h3>
-            </div><div name="org.positronicnet.notifications.NotifierImpl" class="parent">
-              <h3>Inherited from <a name="org.positronicnet.notifications.NotifierImpl" class="extype" href="../notifications/NotifierImpl.html">NotifierImpl</a>[T]</h3>
-            </div><div name="org.positronicnet.notifications.Notifier" class="parent">
-              <h3>Inherited from <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a>[T]</h3>
-            </div><div name="org.positronicnet.notifications.BaseNotifier" class="parent">
-              <h3>Inherited from <a name="org.positronicnet.notifications.BaseNotifier" class="extype" href="../notifications/BaseNotifier.html">BaseNotifier</a></h3>
-            </div><div name="scala.AnyRef" class="parent">
+        <div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">
               <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>

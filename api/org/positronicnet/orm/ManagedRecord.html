@@ -14,13 +14,13 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a title="Go to companion" href="ManagedRecord$.html"><img src="../../../lib/class_to_object_big.png" /></a>
+        <img src="../../../lib/trait_big.png" />
         <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a></p>
-        <h1><a title="Go to companion" href="ManagedRecord$.html">ManagedRecord</a></h1>
+        <h1>ManagedRecord</h1>
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">class</span>
+      <span class="kind">trait</span>
       <span class="symbol"> 
         <span class="name">ManagedRecord</span>
         
@@ -45,9 +45,9 @@ will actually be used.)</p><p>Most of the heavy lifting is delegated to a
 <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> singleton into the
 <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="">ManagedRecord</a> superclass constructor,
 like so:</p><pre>
-    case class TodoItem( description: String = null,
-                         isDone: Boolean     = false,
-                         id: Long            = ManagedRecord.unsavedId
+    case class TodoItem( description: String    = null,
+                         isDone: Boolean        = false,
+                         id: RecordId[TodoItem] = TodoItems.unsavedId
                        )
       extends ManagedRecord( TodoItem )
 
@@ -60,7 +60,7 @@ automatically map fields based on certain naming conventions, while a
 org.positonicnet.orm.BaseRecordManager must be configured explicitly.</p><p>Note also that the manager MUST be a <code>RecordManager[ thisclass ]</code>, (or
 <code>BaseRecordManager[ thisclass ]</code>), but it's
 awfully awkward to write that constraint...
-</p></div><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl><div class="toggleContainer block">
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
@@ -86,36 +86,11 @@ awfully awkward to write that constraint...
             </div>
         </div>
 
-        <div class="members" id="constructors">
-              <h3>Instance Constructors</h3>
-              <ol><li visbl="pub" name="org.positronicnet.orm.ManagedRecord#this" data-isabs="false">
-      <a id="this:ManagedRecord"></a>
-      <h4 class="signature">
-      <span class="kind">new</span>
-      <span class="symbol"> 
-        <span class="name">ManagedRecord</span>
         
-        <span class="params">(<span name="manager">manager: org.positronicnet.orm.BaseRecordManager[_]</span>)</span>
-      </span>
-      </h4>
-      
-    </li></ol>
-            </div>
 
         <div class="types members" id="types">
               <h3>Type Members</h3>
-              <ol><li visbl="pub" name="org.positronicnet.orm.ManagedRecord.BelongsTo" data-isabs="false">
-      <a id="BelongsTo:BelongsTo[T]"></a>
-      <h4 class="signature">
-      <span class="kind">class</span>
-      <span class="symbol"> 
-        <a href="ManagedRecord$BelongsTo.html"><span class="name">BelongsTo</span></a>
-        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
-        <span class="result"> extends BelongsToImpl[T]</span>
-      </span>
-      </h4>
-      <p class="comment cmt">Many-to-one association.</p>
-    </li><li visbl="pub" name="org.positronicnet.orm.ManagedRecord.HasMany" data-isabs="false">
+              <ol><li visbl="pub" name="org.positronicnet.orm.ManagedRecord.HasMany" data-isabs="false">
       <a id="HasMany:HasMany[T]"></a>
       <h4 class="signature">
       <span class="kind">class</span>
@@ -132,13 +107,13 @@ awfully awkward to write that constraint...
         <div class="values members" id="values">
               <h3>Abstract Value Members</h3>
               <ol><li visbl="pub" name="org.positronicnet.orm.ManagedRecord#id" data-isabs="true">
-      <a id="id:Long"></a>
+      <a id="id:org.positronicnet.orm.RecordId[_]"></a>
       <h4 class="signature">
       <span class="kind">val</span>
       <span class="symbol"> 
         <span class="name">id</span>
         
-        <span class="result">: <span name="scala.Long" class="extype">Long</span></span>
+        <span class="result">: org.positronicnet.orm.RecordId[_]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Persistent ID of this record.</p><div class="fullcomment"><div class="comment cmt"><p>Persistent ID of this record.  Must default to

@@ -34,7 +34,7 @@ precisely, any data which can be accessed through a
 <a name="org.positronicnet.content.ContentRepository" class="extype" href="../content/ContentRepository.html">ContentRepository</a>; that currently
 includes both SQLite <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>s and
 Android <code>ContentProvider</code>s, via
-<a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="../content/PositronicContentResolver.html">PositronicContentResolver</a> --- though
+org.positronicnet.content.PositronicContentResolver --- though
 ContentProvider support is currently less than perfect, due to lack
 of support for batched updates.</p><p>It works by transparently mapping rows from the cursors to (and
 from) simple Scala objects, following the
@@ -133,9 +133,9 @@ work for you, you can override <code>newRecord</code> in the
 <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> to do something else instead.
 But the common pattern just works.)</p><p>Accordingly, a minimal record declaration might be something like the
 following:</p><pre>
-    case class TodoItem( description: String = null,
-                         isDone: Boolean     = false,
-                         id: Long            = ManagedRecord.unsavedId
+    case class TodoItem( description: String    = null,
+                         isDone: Boolean        = false,
+                         id: RecordId[TodoItem] = TodoItems.unsavedId
                        )
       extends ManagedRecord( TodoItem )
 
@@ -156,8 +156,12 @@ declared like so:</p><pre>
 </pre><p>Some points to note in this example:</p><ul><li>The <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> doesn't have to be the
    companion object of the <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class
    that it manages (although it certainly can be).</li><li>The <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class needs to have a
-   <code>Long</code>-valued field named <code>id</code>, which will be mapped to the <code>_id</code>
-   within the database (to match Android conventions).</li><li>The <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> will happily persist
+   field named <code>id</code>, which will be mapped to the <code>_id</code>
+   within the database (to match Android conventions).  The type of
+   that field is declared as <code>RecordId[...]</code>.  For saved records, this
+   just wraps the underlying <code>Long</code> in the obvious way; for unsaved
+   records, there is special handling.  Also, a <code>RecordId</code> for a saved
+   record can be used to retrieve the record itself, as discussed below.</li><li>The <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> will happily persist
    <code>Boolean</code> fields into <code>integer</code> columns by setting them to 0 or 1,
    following SQLite's recommended convention for booleans.  It will
    also persist numeric values (integers and floats) and strings into
@@ -248,7 +252,7 @@ which has its own set of <code>todo_items</code> --- those being the items whose
 conventions regarding plurals and so forth.)</p><p>We'd like to be able to access the items given the list, and vice
 versa.  Here's an example of how that can get mapped:</p><pre>
     case class TodoList( name: String = null,
-                         id: Long     = ManagedRecord.unsavedId )
+                         id: RecordId[TodoList] = TodoLists.unsavedId )
       extends ManagedRecord( TodoLists )
     {
       lazy val items = new HasMany( TodoItems )
@@ -256,17 +260,13 @@ versa.  Here's an example of how that can get mapped:</p><pre>
 
     object TodoLists extends RecordManager[ TodoList ](TodoDb(&quot;todo_lists&quot;))
 
-    case class TodoItem( todoListId: Long    = ManagedRecord.unsavedId,
+    case class TodoItem( todoListId: RecordId[TodoList]=TodoLists.unsavedId,
                          description: String = null,
-                         id: Long            = ManagedRecord.unsavedId )
+                         id: RecordId[TodoItem] = TodoItems.unsavedId )
       extends ManagedRecord( TodoItems )
-    {
-      lazy val todoList = new BelongsTo( TodoLists )
-    }
-</pre><p>Here, <a name="org.positronicnet.orm.ManagedRecord.HasMany" class="extype" href="ManagedRecord$HasMany.html">HasMany</a> and
-<a name="org.positronicnet.orm.ManagedRecord.BelongsTo" class="extype" href="ManagedRecord$BelongsTo.html">BelongsTo</a> are nested classes
+</pre><p>Here, <a name="org.positronicnet.orm.ManagedRecord.HasMany" class="extype" href="ManagedRecord$HasMany.html">HasMany</a> is a nested class
 provided by the orm.positronicnet.orm.ManagedRecord superclass.
-The <code>lazy val</code>s here are, as usual, intended to delay construction
+The <code>lazy val</code>s here is, as usual, intended to delay construction
 of these objects until someone refers to them.  Constructing them
 doesn't immediately cause any database I/O, but it still takes time
 and storage space, and if no one's going to refer to them at all,
@@ -292,15 +292,13 @@ example:</p><pre>
 conditions --- will be notified of the change.)</p><p>Second, when a <code>TodoList</code> is deleted, the
 <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>s use some reflection to track
 down <code>TodoItem</code>s associated with the vanishing lists, and to delete them
-as well.</p><p>The <a name="org.positronicnet.orm.ManagedRecord.BelongsTo" class="extype" href="ManagedRecord$BelongsTo.html">BelongsTo</a> is somewhat different.
-A <code>TodoItem</code> has only one parent <code>TodoList</code> at a time, so the
-org.positronicnet.orm.MangedRecord.BelongsTo object behaves as a query
-for <i>that particular list</i>.  Thus, for example,</p><pre>
-    myItem.todoList ! Fetch { list =&gt;
+as well.</p><p>However, it's also sometimes useful to go the other way --- to be able
+to use a <code>TodoItem</code> to fetch the associated <code>TodoList</code>.  That can be done
+by using the <code>RecordId</code> as a query source for the item in question, like so:</p><pre>
+    myItem.todoListId ! Fetch { list =&gt;
       Log.d( &quot;XXX&quot;, &quot;The list's name is: &quot; + list.name )
     }
-</pre><p>It currently supports only access to the parent record, not modifications.
-</p></div></div>
+</pre></div></div>
         
 
       <div id="template">
@@ -319,7 +317,18 @@ for <i>that particular list</i>.  Thus, for example,</p><pre>
 
         <div class="types members" id="types">
               <h3>Type Members</h3>
-              <ol><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager" data-isabs="true">
+              <ol><li visbl="pub" name="org.positronicnet.orm.BaseJoin" data-isabs="true">
+      <a id="BaseJoin:BaseJoin[TLeft, TRight, TResult]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="BaseJoin.html"><span class="name">BaseJoin</span></a>
+        <span class="tparams">[<span name="TLeft">TLeft &lt;: ManagedRecord</span>, <span name="TRight">TRight &lt;: ManagedRecord</span>, <span name="TResult">TResult</span>]</span>
+        <span class="result"> extends BaseNotifier with NonSharedNotifier[TResult]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager" data-isabs="true">
       <a id="BaseRecordManager:BaseRecordManager[T]"></a>
       <h4 class="signature">
       <span class="kind">class</span>
@@ -331,10 +340,22 @@ for <i>that particular list</i>.  Thus, for example,</p><pre>
       </h4>
       <p class="comment cmt">Base class for mapping of <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>s
 to and from persistent storage.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.BatchScopeAction" data-isabs="false">
+      <a id="BatchScopeAction:BatchScopeAction"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="BatchScopeAction.html"><span class="name">BatchScopeAction</span></a>
+        
+        <span class="result"> extends BatchAction with ScopeBatchTranslation</span>
+      </span>
+      </h4>
+      <p class="comment cmt">A subclass of <a name="org.positronicnet.content.BatchAction" class="extype" href="../content/BatchAction.html">BatchAction</a> that allows
+callers to batch up <code>Save</code> and <code>Delete</code> operations in the ORM.</p>
     </li><li visbl="pub" name="org.positronicnet.orm.ManagedRecord" data-isabs="true">
       <a id="ManagedRecord:ManagedRecord"></a>
       <h4 class="signature">
-      <span class="kind">class</span>
+      <span class="kind">trait</span>
       <span class="symbol"> 
         <a href="ManagedRecord.html"><span class="name">ManagedRecord</span></a>
         
@@ -344,6 +365,28 @@ to and from persistent storage.</p>
       <p class="comment cmt">Abstract base class for objects that will be persisted by this ORM into some
 <a name="org.positronicnet.content.ContentRepository" class="extype" href="../content/ContentRepository.html">ContentRepository</a> (be it a
 <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>, a <code>ContentProvider</code>, or whatever).</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.NoSuchVariant" data-isabs="false">
+      <a id="NoSuchVariant:NoSuchVariant"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="NoSuchVariant.html"><span class="name">NoSuchVariant</span></a>
+        
+        <span class="result"> extends RuntimeException</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.orm.OneToManyJoin" data-isabs="false">
+      <a id="OneToManyJoin:OneToManyJoin[TLeft, TRight]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="OneToManyJoin.html"><span class="name">OneToManyJoin</span></a>
+        <span class="tparams">[<span name="TLeft">TLeft &lt;: ManagedRecord</span>, <span name="TRight">TRight &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends BaseJoin[TLeft, TRight, IndexedSeq[(TLeft, IndexedSeq[TRight])]]</span>
+      </span>
+      </h4>
+      
     </li><li visbl="pub" name="org.positronicnet.orm.ParentSoftDeleteListener" data-isabs="true">
       <a id="ParentSoftDeleteListener:ParentSoftDeleteListener[T]"></a>
       <h4 class="signature">
@@ -355,9 +398,20 @@ to and from persistent storage.</p>
       </span>
       </h4>
       <p class="comment cmt">Mixin for <i>child</i> records of a class which
-<a name="org.positronicnet.orm.ManagedRecord.BelongsTo" class="extype" href="ManagedRecord$BelongsTo.html">BelongsTo</a> a parent class
+org.positronicnet.orm.ManagedRecord.BelongsTo a parent class
 which is itself subject to soft-deletion --- that is, for instance,
 <code>Item</code>s which might belong to a soft-deleted <code>List</code>.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.RecordId" data-isabs="false">
+      <a id="RecordId:RecordId[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="RecordId.html"><span class="name">RecordId</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends NonSharedNotifier[T] with Serializable</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Representation for a record ID.</p>
     </li><li visbl="pub" name="org.positronicnet.orm.RecordManager" data-isabs="true">
       <a id="RecordManager:RecordManager[T]"></a>
       <h4 class="signature">
@@ -365,11 +419,22 @@ which is itself subject to soft-deletion --- that is, for instance,
       <span class="symbol"> 
         <a href="RecordManager.html"><span class="name">RecordManager</span></a>
         <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
-        <span class="result"> extends BaseRecordManager[T]</span>
+        <span class="result"> extends BaseRecordManager[T] with AutomaticFieldMappingFromQuery[T]</span>
       </span>
       </h4>
       <p class="comment cmt">Class for mapping of <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a>s
 to and from persistent storage.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.RecordManagerForFields" data-isabs="true">
+      <a id="RecordManagerForFields:RecordManagerForFields[TRec, TSrc]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="RecordManagerForFields.html"><span class="name">RecordManagerForFields</span></a>
+        <span class="tparams">[<span name="TRec">TRec &lt;: ManagedRecord</span>, <span name="TSrc">TSrc</span>]</span>
+        <span class="result"> extends BaseRecordManager[TRec] with FieldMappingFromStaticNames[TRec]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.orm.Scope" data-isabs="true">
       <a id="Scope:Scope[T]"></a>
       <h4 class="signature">
@@ -453,6 +518,17 @@ to give useful information about subject records.</p>
       </span>
       </h4>
       <p class="comment cmt">Implementation of the Undelete action; SoftDeleteActions.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.VariantRecordManager" data-isabs="true">
+      <a id="VariantRecordManager:VariantRecordManager[T]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="VariantRecordManager.html"><span class="name">VariantRecordManager</span></a>
+        <span class="tparams">[<span name="T">T &lt;: ManagedRecord</span>]</span>
+        <span class="result"> extends BaseRecordManager[T]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
     </li></ol>
             </div>
         
@@ -472,25 +548,26 @@ to give useful information about subject records.</p>
       </h4>
       <p class="comment cmt">Actions that can be sent to <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>s
 and other <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>s.</p>
-    </li><li visbl="pub" name="org.positronicnet.orm.ManagedRecord" data-isabs="false">
-      <a id="ManagedRecord:ManagedRecord"></a>
+    </li><li visbl="pub" name="org.positronicnet.orm.MapAs" data-isabs="false">
+      <a id="MapAs:MapAs"></a>
       <h4 class="signature">
       <span class="kind">object</span>
       <span class="symbol"> 
-        <a href="ManagedRecord$.html"><span class="name">ManagedRecord</span></a>
+        <a href="MapAs$.html"><span class="name">MapAs</span></a>
         
-        <span class="result"> extends AnyRef</span>
+        <span class="result"> extends Enumeration</span>
       </span>
       </h4>
-      <p class="comment cmt">Companion object for the <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a> class.</p>
-    </li><li visbl="pub" name="org.positronicnet.orm.ReflectUtils" data-isabs="false">
-      <a id="ReflectUtils:ReflectUtils"></a>
+      <p class="comment cmt">Some content providers have fields in their pseudo-tables which
+are effectively read-only, or write-once.</p>
+    </li><li visbl="pub" name="org.positronicnet.orm.RecordId" data-isabs="false">
+      <a id="RecordId:RecordId"></a>
       <h4 class="signature">
       <span class="kind">object</span>
       <span class="symbol"> 
-        <a href="ReflectUtils$.html"><span class="name">ReflectUtils</span></a>
+        <a href="RecordId$.html"><span class="name">RecordId</span></a>
         
-        <span class="result"> extends AnyRef</span>
+        <span class="result"> extends Serializable</span>
       </span>
       </h4>
       

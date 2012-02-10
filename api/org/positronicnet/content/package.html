@@ -32,7 +32,7 @@
 and a common fluid interface, for
 accessing both SQLite Databases (via the <a name="org.positronicnet.db.Database" class="extype" href="../db/Database.html">Database</a>
 class) and Android <code>ContentProvider</code>s (via
-<a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="PositronicContentResolver.html">PositronicContentResolver</a>).  This interface
+org.positronicnet.content.PositronicContentResolver).  This interface
 is also used by the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a> package, which provides
 a common higher-level structure for accessing the same resources, where
 it proves convenient.</p><p>The user-visible facilities of the infrastructure consist largely of
@@ -69,7 +69,7 @@ manipulate the rows of the <code>todo_items</code> table in the following ways:<
                                      &quot;is_done&quot; -&gt; false )
     bigListItems.where( &quot;_id &lt; ?&quot;, 50 ).update( &quot;is_done&quot; -&gt; true )
     bigListItems.whereEq( &quot;is_done&quot; -&gt; true ).delete
-</pre><p><a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="PositronicContentResolver.html">PositronicContentResolver</a> can be used
+</pre><p>org.positronicnet.content.PositronicContentResolver can be used
 to deal with Android ContentProviders in a similar style.
 </p></div></div>
         
@@ -90,7 +90,19 @@ to deal with Android ContentProviders in a similar style.
 
         <div class="types members" id="types">
               <h3>Type Members</h3>
-              <ol><li visbl="pub" name="org.positronicnet.content.ContentProviderQuery" data-isabs="false">
+              <ol><li visbl="pub" name="org.positronicnet.content.BatchAction" data-isabs="false">
+      <a id="BatchAction:BatchAction"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="BatchAction.html"><span class="name">BatchAction</span></a>
+        
+        <span class="result"> extends ContentResolverAction</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Action on ContentResolvers that applies a batch of
+<code>android.content.ContentProviderOperation</code>s.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.ContentProviderQuery" data-isabs="false">
       <a id="ContentProviderQuery:ContentProviderQuery[IdType]"></a>
       <h4 class="signature">
       <span class="kind">class</span>
@@ -124,6 +136,17 @@ to deal with Android ContentProviders in a similar style.
       </h4>
       <p class="comment cmt">Generic interface to &quot;content repositories&quot;, including databases
 and ContentResolvers.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.ContentResolverAction" data-isabs="true">
+      <a id="ContentResolverAction:ContentResolverAction"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ContentResolverAction.html"><span class="name">ContentResolverAction</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Action on the content resolver, considered as an actor</p>
     </li><li visbl="pub" name="org.positronicnet.content.ContentValue" data-isabs="true">
       <a id="ContentValue:ContentValue"></a>
       <h4 class="signature">
@@ -226,20 +249,6 @@ for extensions.</p>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="org.positronicnet.content.PositronicContentResolver" data-isabs="false">
-      <a id="PositronicContentResolver:PositronicContentResolver"></a>
-      <h4 class="signature">
-      <span class="kind">class</span>
-      <span class="symbol"> 
-        <a href="PositronicContentResolver.html"><span class="name">PositronicContentResolver</span></a>
-        
-        <span class="result"> extends AppFacility</span>
-      </span>
-      </h4>
-      <p class="comment cmt">Simple <a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a> for interacting with
-Android ContentProviders using the Positronic Net
-<a name="org.positronicnet.content.ContentQuery" class="extype" href="ContentQuery.html">ContentQuery</a> convenience shorthands,
-or the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a>.</p>
     </li><li visbl="pub" name="org.positronicnet.content.PositronicCursor" data-isabs="false">
       <a id="PositronicCursor:PositronicCursor"></a>
       <h4 class="signature">
@@ -280,6 +289,20 @@ or the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html"
       </span>
       </h4>
       <p class="comment cmt">Companion object for the org.positronicnet.org.ContentValue class.</p>
+    </li><li visbl="pub" name="org.positronicnet.content.PositronicContentResolver" data-isabs="false">
+      <a id="PositronicContentResolver:PositronicContentResolver"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="PositronicContentResolver$.html"><span class="name">PositronicContentResolver</span></a>
+        
+        <span class="result"> extends AppFacility with WorkerThread</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Simple <a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a> for interacting with
+Android ContentProviders using the Positronic Net
+<a name="org.positronicnet.content.ContentQuery" class="extype" href="ContentQuery.html">ContentQuery</a> convenience shorthands,
+or the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a>.</p>
     </li></ol>
             </div>
 

@@ -76,7 +76,7 @@ of extra code.
       <span class="symbol"> 
         <span class="name">IndexedSeqAdapter</span>
         
-        <span class="params">(<span name="seq">seq: IndexedSeq[T]</span>, <span name="itemViewResourceId">itemViewResourceId: <span name="scala.Int" class="extype">Int</span></span>, <span name="itemTextResourceId">itemTextResourceId: <span name="scala.Int" class="extype">Int</span></span>)</span>
+        <span class="params">(<span name="seq">seq: IndexedSeq[T]</span>, <span name="itemViewResourceId">itemViewResourceId: <span name="scala.Int" class="extype">Int</span></span>, <span name="binder">binder: <a name="org.positronicnet.ui.UiBinder" class="extype" href="UiBinder.html">UiBinder</a></span>)</span>
       </span>
       </h4>
       
@@ -178,12 +178,14 @@ of extra code.
       </h4>
       <p class="shortcomment cmt">Make one of the views resulting from <code>newView</code> display a particular
 <code>item</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Make one of the views resulting from <code>newView</code> display a particular
-<code>item</code>.</p><p>If it's not overridden, it will call <code>toString</code> on the item, and
-try to stuff the resulting string into a relevant <code>TextView</code>.  If
-an <code>itemTextResourceId</code> was supplied to the adapter constructor,
-we'll call <code>findViewById</code> on the <code>view</code> we get to find the <code>View</code>
-we update.  Otherwise, the <code>view</code> we get (returned by <code>newView</code>)
-must be a <code>TextView</code>, and we'll update that.
+<code>item</code>.  The default implementation uses the
+<a name="org.positronicnet.ui.UiBinder" class="extype" href="UiBinder.html">UiBinder</a> object passed in as a constructor
+argument, for which the default is the <a name="org.positronicnet.ui.UiBinder" class="extype" href="UiBinder.html">UiBinder</a>
+singleton.</p><p>If the <code>view</code> is a <code>TextView</code>, and no other arrangements have been
+made, this will effectively do <code>view.setText(item.toString)</code>.  See
+the documentation on <a name="org.positronicnet.ui.UiBinder" class="extype" href="UiBinder.html">UiBinder</a> for how to
+easily make it do something smarter (e.g., loading views with the
+values of properties named by their resource IDs).
 </p></div></div>
     </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
       <a id="clone():AnyRef"></a>

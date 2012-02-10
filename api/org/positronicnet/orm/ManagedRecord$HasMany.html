@@ -73,7 +73,7 @@ corresponding Scala record field.
       <span class="symbol"> 
         <span class="name">HasMany</span>
         
-        <span class="params">(<span name="src">src: <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>[T]</span>)</span>
+        <span class="params">(<span name="src">src: <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>[T]</span>)</span>
       </span>
       </h4>
       
@@ -84,7 +84,7 @@ corresponding Scala record field.
       <span class="symbol"> 
         <span class="name">HasMany</span>
         
-        <span class="params">(<span name="src">src: <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>[T]</span>, <span name="foreignKey">foreignKey: String</span>)</span>
+        <span class="params">(<span name="src">src: <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>[T]</span>, <span name="foreignKey">foreignKey: String</span>)</span>
       </span>
       </h4>
       
@@ -366,13 +366,13 @@ content source.
               
         </dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.orm.Scope#findOnThisThread" data-isabs="false">
-      <a id="findOnThisThread(Long):T"></a>
+      <a id="findOnThisThread(RecordId[T]):T"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">findOnThisThread</span>
         
-        <span class="params">(<span name="id">id: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="result">: T</span>
+        <span class="params">(<span name="id">id: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>)</span><span class="result">: T</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Find the record with the given <code>id</code>, if it exists, running the
@@ -381,13 +381,13 @@ query on the current thread, and returning it as the value.</p><p>XXX should onl
 scope, as per Rails.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a></dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.orm.HasManyAssociation#foreignKeyField" data-isabs="false">
-      <a id="foreignKeyField:MappedField"></a>
+      <a id="foreignKeyField:Field"></a>
       <h4 class="signature">
       <span class="kind">lazy val</span>
       <span class="symbol"> 
         <span class="name">foreignKeyField</span>
         
-        <span class="result">: <span name="org.positronicnet.orm.MappedField" class="extype">MappedField</span></span>
+        <span class="result">: <span name="java.lang.reflect.Field" class="extype">Field</span></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasManyAssociation</dd></dl></div>

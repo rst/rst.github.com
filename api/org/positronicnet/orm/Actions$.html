@@ -174,13 +174,13 @@ one (an insert).</p>
       </h4>
       <p class="shortcomment cmt">Request to delete all of the records matching this scope.</p>
     </li><li visbl="pub" name="org.positronicnet.orm.Actions#Find" data-isabs="false">
-      <a id="Find[T](Long)((T) ⇒ Unit):FindAction[T]"></a>
+      <a id="Find[T&lt;:ManagedRecord](RecordId[T])((T) ⇒ Unit):FindAction[T]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">Find</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="id">id: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="params">(<span name="handler">handler: (T) ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <span name="org.positronicnet.orm.Actions.FindAction" class="extype">FindAction</span>[T]</span>
+        <span class="tparams">[<span name="T">T &lt;: <a name="org.positronicnet.orm.ManagedRecord" class="extype" href="ManagedRecord.html">ManagedRecord</a></span>]</span>
+        <span class="params">(<span name="id">id: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>)</span><span class="params">(<span name="handler">handler: (T) ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <span name="org.positronicnet.orm.Actions.FindAction" class="extype">FindAction</span>[T]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Find the record with the given <code>id</code>, if it exists.</p><div class="fullcomment"><div class="comment cmt"><p>Find the record with the given <code>id</code>, if it exists.

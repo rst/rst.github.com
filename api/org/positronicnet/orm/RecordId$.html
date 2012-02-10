@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>org.positronicnet.content.PositronicContentResolver</title>
+          <title>org.positronicnet.orm.RecordId</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
@@ -12,61 +12,25 @@
       <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
     
         </head>
-        <body class="type">
+        <body class="value">
       <div id="definition">
-        <img src="../../../lib/class_big.png" />
-        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.content" class="extype" href="package.html">content</a></p>
-        <h1>PositronicContentResolver</h1>
+        <a title="Go to companion" href="RecordId.html"><img src="../../../lib/object_to_class_big.png" /></a>
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a></p>
+        <h1><a title="Go to companion" href="RecordId.html">RecordId</a></h1>
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">class</span>
+      <span class="kind">object</span>
       <span class="symbol"> 
-        <span class="name">PositronicContentResolver</span>
+        <span class="name">RecordId</span>
         
-        <span class="result"> extends <a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></span>
+        <span class="result"> extends <span name="scala.Serializable" class="extype">Serializable</span></span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Simple <a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a> for interacting with
-Android ContentProviders using the Positronic Net
-<a name="org.positronicnet.content.ContentQuery" class="extype" href="ContentQuery.html">ContentQuery</a> convenience shorthands,
-or the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a>.  Once the facility has been
-opened (via <code>openInContext</code>), it can be used to produce
-<a name="org.positronicnet.content.ContentQuery" class="extype" href="ContentQuery.html">ContentQuery</a> objects that refer to
-individual <code>ContentProvider</code>s, including those provided by other
-apps or the platform itself.</p><p>The best treatment of row-IDs here isn't quite clear.  The
-underlying platform <code>insert</code> method on a <code>ContentProvider</code> returns
-a URI for the newly created row, but by convention that row will
-almost always include a <code>Long</code> which can be obtained from the URI
-itself via the <code>ContentURIs.parseID</code> method provided by the
-framework, and which will also be used to identify the row in the
-same bulk queries.  Since it isn't obvious which is better, we
-give you both choices, as follows:</p><p>Let's say you have the URI of some
-<code>ContentProvider</code> --- say <code>android.provider.CallLog.Calls.CONTENT_URI</code>,
-just to be concrete.  Once you've got a resolver opened like so:</p><pre>
-    object Resolver extends PositronicContentResolver( &quot;call_log_app&quot; )
-    ...
-    class SomeActivity {
-      onCreate {
-        useAppFacility( Resolver )
-      }
-    }
-</pre><p>you can either say</p><pre>
-    queryHandle = Resolver( Calls.CONTENT_URI )
-</pre><p>to get a org.positronicnet.orm.ContentQuery on which <code>insert</code> will
-return a <code>Long</code> ID, or</p><pre>
-    queryHandle = Resolver.withUriIds( Calls.CONTENT_URI )
-</pre><p>to obtain one on which <code>insert</code> is typed to return the raw URIs.</p><p>There's no other difference between the two, but only the latter
-will work with the <a name="org.positronicnet.orm" class="extype" href="../orm/package.html">orm</a>, which requires long
-IDs for the moment.</p><p>In general, the <code>Long</code>-id variants are easier to deal with for
-providers which support that convention (most of the standard
-ones on the platform, for starters), but the <code>withUriIds</code> variant
-is there if you prefer it.</p><p>(And of course, the raw platform API is still available if you
-prefer that.)
-</p></div><div class="toggleContainer block">
+          <div class="fullcommenttop" id="comment"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent"><span name="scala.Serializable" class="extype">Serializable</span>, <span name="java.io.Serializable" class="extype">Serializable</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
         
 
@@ -82,7 +46,7 @@ prefer that.)
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="org.positronicnet.content.PositronicContentResolver" class="in"><span>PositronicContentResolver</span></li><li name="org.positronicnet.facility.AppFacility" class="in"><span>AppFacility</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="org.positronicnet.orm.RecordId" class="in"><span>RecordId</span></li><li name="scala.Serializable" class="in"><span>Serializable</span></li><li name="java.io.Serializable" class="in"><span>Serializable</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -90,21 +54,7 @@ prefer that.)
             </div>
         </div>
 
-        <div class="members" id="constructors">
-              <h3>Instance Constructors</h3>
-              <ol><li visbl="pub" name="org.positronicnet.content.PositronicContentResolver#this" data-isabs="false">
-      <a id="this:PositronicContentResolver"></a>
-      <h4 class="signature">
-      <span class="kind">new</span>
-      <span class="symbol"> 
-        <span class="name">PositronicContentResolver</span>
         
-        <span class="params">(<span name="logTag">logTag: String</span>)</span>
-      </span>
-      </h4>
-      
-    </li></ol>
-            </div>
 
         
         
@@ -167,18 +117,6 @@ prefer that.)
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.content.PositronicContentResolver#apply" data-isabs="false">
-      <a id="apply(Uri):ContentProviderQuery[Long]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">apply</span>
-        
-        <span class="params">(<span name="uri">uri: <span name="android.net.Uri" class="extype">Uri</span></span>)</span><span class="result">: <a name="org.positronicnet.content.ContentProviderQuery" class="extype" href="ContentProviderQuery.html">ContentProviderQuery</a>[<span name="scala.Long" class="extype">Long</span>]</span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Return a org.positronicnet.orm.ContentQuery obeying the <code>Long</code>-id
-convention, as described above.</p>
     </li><li visbl="pub" name="scala.Any#asInstanceOf" data-isabs="false">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
@@ -204,23 +142,6 @@ convention, as described above.</p>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.facility.AppFacility#close" data-isabs="false">
-      <a id="close:Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">close</span>
-        
-        <span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Close the facility.</p><div class="fullcomment"><div class="comment cmt"><p>Close the facility.</p><p>First, decrements the &quot;nested open&quot; count.  If it has reached
-zero, do a &quot;real&quot; close, using the protected <code>realclose</code> method.
-Otherwise, some other activity is still using the facility, and
-it stays open.</p><p>When the last activity or service calls <code>close</code>, the facility
-actually does shut down, using the protected <code>realClose</code> method,
-which will shut down threads, close files, or whatever.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -268,17 +189,6 @@ which will shut down threads, close files, or whatever.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.facility.AppFacility#getLogTag" data-isabs="false">
-      <a id="getLogTag:String"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">getLogTag</span>
-        
-        <span class="result">: String</span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Tag for the facility to use in log entries</p><div class="fullcomment"><div class="comment cmt"><p>Tag for the facility to use in log entries</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
@@ -301,17 +211,6 @@ which will shut down threads, close files, or whatever.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.facility.AppFacility#log" data-isabs="false">
-      <a id="log(String):AnyVal"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">log</span>
-        
-        <span class="params">(<span name="s">s: String</span>)</span><span class="result">: <span name="scala.AnyVal" class="extype">AnyVal</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Writes a debugging log method, using the facility's <code>logTag</code></p><div class="fullcomment"><div class="comment cmt"><p>Writes a debugging log method, using the facility's <code>logTag</code></p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -345,45 +244,17 @@ which will shut down threads, close files, or whatever.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.facility.AppFacility#openInContext" data-isabs="false">
-      <a id="openInContext(Context):Unit"></a>
+    </li><li visbl="prt" name="org.positronicnet.orm.RecordId#readResolve" data-isabs="false">
+      <a id="readResolve():AnyRef"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">openInContext</span>
+        <span class="name">readResolve</span>
         
-        <span class="params">(<span name="ctx">ctx: <span name="android.content.Context" class="extype">Context</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+        <span class="params">()</span><span class="result">: AnyRef</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Open the facility.</p><div class="fullcomment"><div class="comment cmt"><p>Open the facility.</p><p>If the facility isn't already open, does setup which depends on
-the particular facility (which may involve opening files,
-starting threads, or whatever) --- a &quot;real&quot; open, using the
-protected <code>realOpen</code> method.  The given <code>Context</code> may be used
-for setup, depending on the nature of the facility.</p><p>If it is already open, just increments a &quot;nested open&quot; count;
-see <code>close</code> below.
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.facility.AppFacility#realClose" data-isabs="false">
-      <a id="realClose:Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">realClose</span>
-        
-        <span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.content.PositronicContentResolver#realOpen" data-isabs="false">
-      <a id="realOpen(Context):Unit"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">realOpen</span>
-        
-        <span class="params">(<span name="ctx">ctx: <span name="android.content.Context" class="extype">Context</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.content.PositronicContentResolver" class="extype" href="">PositronicContentResolver</a> → <a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -395,6 +266,17 @@ see <code>close</code> below.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.orm.RecordId#toContentValue" data-isabs="false">
+      <a id="toContentValue(org.positronicnet.orm.RecordId[_]):ContentValue"></a>
+      <h4 class="signature">
+      <span class="kind">implicit def</span>
+      <span class="symbol"> 
+        <span class="name">toContentValue</span>
+        
+        <span class="params">(<span name="id">id: org.positronicnet.orm.RecordId[_]</span>)</span><span class="result">: <a name="org.positronicnet.content.ContentValue" class="extype" href="../content/ContentValue.html">ContentValue</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#toString" data-isabs="false">
       <a id="toString():String"></a>
       <h4 class="signature">
@@ -448,23 +330,13 @@ see <code>close</code> below.
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.content.PositronicContentResolver#withUriIds" data-isabs="false">
-      <a id="withUriIds(Uri):ContentProviderQuery[Uri]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">withUriIds</span>
-        
-        <span class="params">(<span name="uri">uri: <span name="android.net.Uri" class="extype">Uri</span></span>)</span><span class="result">: <a name="org.positronicnet.content.ContentProviderQuery" class="extype" href="ContentProviderQuery.html">ContentProviderQuery</a>[<span name="android.net.Uri" class="extype">Uri</span>]</span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Return a org.positronicnet.orm.ContentQuery obeying the URI-id
-convention, as described above.</p>
     </li></ol>
             </div>
 
-        <div name="org.positronicnet.facility.AppFacility" class="parent">
-              <h3>Inherited from <a name="org.positronicnet.facility.AppFacility" class="extype" href="../facility/AppFacility.html">AppFacility</a></h3>
+        <div name="scala.Serializable" class="parent">
+              <h3>Inherited from <span name="scala.Serializable" class="extype">Serializable</span></h3>
+            </div><div name="java.io.Serializable" class="parent">
+              <h3>Inherited from <span name="java.io.Serializable" class="extype">Serializable</span></h3>
             </div><div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">

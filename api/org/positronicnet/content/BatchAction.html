@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>org.positronicnet.orm.ReflectUtils</title>
+          <title>org.positronicnet.content.BatchAction</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
@@ -12,25 +12,33 @@
       <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
     
         </head>
-        <body class="value">
+        <body class="type">
       <div id="definition">
-        <img src="../../../lib/object_big.png" />
-        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a></p>
-        <h1>ReflectUtils</h1>
+        <img src="../../../lib/class_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.content" class="extype" href="package.html">content</a></p>
+        <h1>BatchAction</h1>
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">object</span>
+      <span class="kind">class</span>
       <span class="symbol"> 
-        <span class="name">ReflectUtils</span>
+        <span class="name">BatchAction</span>
         
-        <span class="result"> extends AnyRef</span>
+        <span class="result"> extends <a name="org.positronicnet.content.ContentResolverAction" class="extype" href="ContentResolverAction.html">ContentResolverAction</a></span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="toggleContainer block">
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Action on ContentResolvers that applies a batch of
+<code>android.content.ContentProviderOperation</code>s.  See also
+<a name="org.positronicnet.orm.BatchScopeAction" class="extype" href="../orm/BatchScopeAction.html">BatchScopeAction</a>, which allows
+you to run a batch of, e.g., <code>Save</code> and <code>Delete</code> ORM actions
+on content mapped by the ORM to some content provider.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent"><a name="org.positronicnet.content.ContentResolverAction" class="extype" href="ContentResolverAction.html">ContentResolverAction</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+        </div><div class="toggleContainer block">
+          <span class="toggle">Known Subclasses</span>
+          <div class="subClasses hiddenContent"><a name="org.positronicnet.orm.BatchScopeAction" class="extype" href="../orm/BatchScopeAction.html">BatchScopeAction</a></div>
         </div></div>
         
 
@@ -46,7 +54,7 @@
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="org.positronicnet.orm.ReflectUtils" class="in"><span>ReflectUtils</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="org.positronicnet.content.BatchAction" class="in"><span>BatchAction</span></li><li name="org.positronicnet.content.ContentResolverAction" class="in"><span>ContentResolverAction</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -54,7 +62,21 @@
             </div>
         </div>
 
+        <div class="members" id="constructors">
+              <h3>Instance Constructors</h3>
+              <ol><li visbl="pub" name="org.positronicnet.content.BatchAction#this" data-isabs="false">
+      <a id="this:BatchAction"></a>
+      <h4 class="signature">
+      <span class="kind">new</span>
+      <span class="symbol"> 
+        <span class="name">BatchAction</span>
         
+        <span class="params">(<span name="authority">authority: String</span>)</span>
+      </span>
+      </h4>
+      
+    </li></ol>
+            </div>
 
         
         
@@ -117,17 +139,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.orm.ReflectUtils#ancestry" data-isabs="false">
-      <a id="ancestry(Class[_]):List[Class[_]]"></a>
+    </li><li visbl="pub" name="org.positronicnet.content.BatchAction#add" data-isabs="false">
+      <a id="add(ContentProviderOperation):Boolean"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">ancestry</span>
+        <span class="name">add</span>
         
-        <span class="params">(<span name="klass">klass: Class[_]</span>)</span><span class="result">: List[Class[_]]</span>
+        <span class="params">(<span name="op">op: <span name="android.content.ContentProviderOperation" class="extype">ContentProviderOperation</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Add an operation to this batch</p>
     </li><li visbl="pub" name="scala.Any#asInstanceOf" data-isabs="false">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
@@ -139,6 +161,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.content.BatchAction#authority" data-isabs="false">
+      <a id="authority:String"></a>
+      <h4 class="signature">
+      <span class="kind">val</span>
+      <span class="symbol"> 
+        <span class="name">authority</span>
+        
+        <span class="result">: String</span>
+      </span>
+      </h4>
+      
     </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
       <a id="clone():AnyRef"></a>
       <h4 class="signature">
@@ -153,17 +186,6 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.orm.ReflectUtils#declaredFieldsByName" data-isabs="false">
-      <a id="declaredFieldsByName(Class[_]):Map[String, Field]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">declaredFieldsByName</span>
-        
-        <span class="params">(<span name="klass">klass: Class[_]</span>)</span><span class="result">: <span name="scala.collection.immutable.Map" class="extype">Map</span>[<span name="java.lang.String" class="extype">String</span>, <span name="java.lang.reflect.Field" class="extype">Field</span>]</span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -186,17 +208,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.orm.ReflectUtils#extractor" data-isabs="false">
-      <a id="extractor[R, T](Class[R],Class[T]):Option[(R) ⇒ Map[String, T]]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">extractor</span>
-        <span class="tparams">[<span name="R">R</span>, <span name="T">T</span>]</span>
-        <span class="params">(<span name="targetKlass">targetKlass: Class[R]</span>, <span name="klass">klass: Class[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[(R) ⇒ Map[String, T]]</span>
-      </span>
-      </h4>
-      
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -222,17 +233,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="org.positronicnet.orm.ReflectUtils#getObjectBuilder" data-isabs="false">
-      <a id="getObjectBuilder[T](ClassManifest[T]):() ⇒ T"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">getObjectBuilder</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span class="implicit">implicit </span><span name="manifest">manifest: ClassManifest[T]</span>)</span><span class="result">: () ⇒ T</span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" name="scala.AnyRef#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
@@ -288,6 +288,32 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.content.BatchAction#onFailure" data-isabs="false">
+      <a id="onFailure(⇒ Unit):BatchAction"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">onFailure</span>
+        
+        <span class="params">(<span name="thunk">thunk: ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <a name="org.positronicnet.content.BatchAction" class="extype" href="">BatchAction</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Fluid interface for adding a failure callback to this batch
+operation.</p><div class="fullcomment"><div class="comment cmt"><p>Fluid interface for adding a failure callback to this batch
+operation.  The thrown exception is logged.
+</p></div></div>
+    </li><li visbl="pub" name="org.positronicnet.content.BatchAction#onSuccess" data-isabs="false">
+      <a id="onSuccess(⇒ Unit):BatchAction"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">onSuccess</span>
+        
+        <span class="params">(<span name="thunk">thunk: ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <a name="org.positronicnet.content.BatchAction" class="extype" href="">BatchAction</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Fluid interface for adding a success callback to this batch
+operation.</p>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -352,10 +378,44 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.content.BatchAction#withSuccessfulResults" data-isabs="false">
+      <a id="withSuccessfulResults((Array[ContentProviderResult]) ⇒ Unit):BatchAction"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">withSuccessfulResults</span>
+        
+        <span class="params">(<span name="callback">callback: (<span name="scala.Array" class="extype">Array</span>[<span name="android.content.ContentProviderResult" class="extype">ContentProviderResult</span>]) ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <a name="org.positronicnet.content.BatchAction" class="extype" href="">BatchAction</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Fluid interface for adding a success callback to this batch
+operation.</p><div class="fullcomment"><div class="comment cmt"><p>Fluid interface for adding a success callback to this batch
+operation.  The argument is the returned array of
+<code>ContentProviderResult</code>s.
+</p></div></div>
+    </li><li visbl="pub" name="org.positronicnet.content.BatchAction#withThrownException" data-isabs="false">
+      <a id="withThrownException((Exception) ⇒ Unit):BatchAction"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">withThrownException</span>
+        
+        <span class="params">(<span name="callback">callback: (Exception) ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <a name="org.positronicnet.content.BatchAction" class="extype" href="">BatchAction</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Fluid interface for adding a failure callback to this batch
+operation.</p><div class="fullcomment"><div class="comment cmt"><p>Fluid interface for adding a failure callback to this batch
+operation.  The argument is the exception that was thrown;
+this will typically be either an OperationApplicationException
+or a RemoteException.</p><p>The thrown exception will have already been logged whatever else
+the callback decides to do with it.
+</p></div></div>
     </li></ol>
             </div>
 
-        <div name="scala.AnyRef" class="parent">
+        <div name="org.positronicnet.content.ContentResolverAction" class="parent">
+              <h3>Inherited from <a name="org.positronicnet.content.ContentResolverAction" class="extype" href="ContentResolverAction.html">ContentResolverAction</a></h3>
+            </div><div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">
               <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>

@@ -40,7 +40,7 @@ extends <a name="org.positronicnet.orm.Scope" class="extype" href="">Scope</a>.)
           <div class="superTypes hiddenContent"><a name="org.positronicnet.notifications.NotifierDelegator" class="extype" href="../notifications/NotifierDelegator.html">NotifierDelegator</a>[IndexedSeq[T]], <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a>[IndexedSeq[T]], <a name="org.positronicnet.notifications.NotificationManager" class="extype" href="../notifications/NotificationManager.html">NotificationManager</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div><div class="toggleContainer block">
           <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a>, <a name="org.positronicnet.orm.ManagedRecord.HasMany" class="extype" href="ManagedRecord$HasMany.html">HasMany</a>, <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>, <a name="org.positronicnet.orm.SoftDelete" class="extype" href="SoftDelete.html">SoftDelete</a>, <a name="org.positronicnet.orm.SoftDeleteQueries" class="extype" href="SoftDeleteQueries.html">SoftDeleteQueries</a>, <a name="org.positronicnet.orm.SoftDeleteScope" class="extype" href="SoftDeleteScope.html">SoftDeleteScope</a></div>
+          <div class="subClasses hiddenContent"><a name="org.positronicnet.orm.VariantRecordManager.BaseCatchAllVariant" class="extype" href="VariantRecordManager$BaseCatchAllVariant.html">BaseCatchAllVariant</a>, <a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a>, <a name="org.positronicnet.orm.VariantRecordManager.BaseTaggedVariant" class="extype" href="VariantRecordManager$BaseTaggedVariant.html">BaseTaggedVariant</a>, <a name="org.positronicnet.orm.VariantRecordManager.BaseVariant" class="extype" href="VariantRecordManager$BaseVariant.html">BaseVariant</a>, <a name="org.positronicnet.orm.VariantRecordManager.CatchAllVariant" class="extype" href="VariantRecordManager$CatchAllVariant.html">CatchAllVariant</a>, <a name="org.positronicnet.orm.VariantRecordManager.CatchAllVariantForFields" class="extype" href="VariantRecordManager$CatchAllVariantForFields.html">CatchAllVariantForFields</a>, <a name="org.positronicnet.orm.ManagedRecord.HasMany" class="extype" href="ManagedRecord$HasMany.html">HasMany</a>, <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a>, <a name="org.positronicnet.orm.RecordManagerForFields" class="extype" href="RecordManagerForFields.html">RecordManagerForFields</a>, <a name="org.positronicnet.orm.SoftDelete" class="extype" href="SoftDelete.html">SoftDelete</a>, <a name="org.positronicnet.orm.SoftDeleteQueries" class="extype" href="SoftDeleteQueries.html">SoftDeleteQueries</a>, <a name="org.positronicnet.orm.SoftDeleteScope" class="extype" href="SoftDeleteScope.html">SoftDeleteScope</a>, <a name="org.positronicnet.orm.VariantRecordManager.TaggedVariant" class="extype" href="VariantRecordManager$TaggedVariant.html">TaggedVariant</a>, <a name="org.positronicnet.orm.VariantRecordManager.TaggedVariantForFields" class="extype" href="VariantRecordManager$TaggedVariantForFields.html">TaggedVariantForFields</a>, <a name="org.positronicnet.orm.VariantRecordManager" class="extype" href="VariantRecordManager.html">VariantRecordManager</a></div>
         </div></div>
         
 
@@ -363,13 +363,13 @@ records matching the extra conditions.</p>
               
         </dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.orm.Scope#findOnThisThread" data-isabs="false">
-      <a id="findOnThisThread(Long):T"></a>
+      <a id="findOnThisThread(RecordId[T]):T"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">findOnThisThread</span>
         
-        <span class="params">(<span name="id">id: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="result">: T</span>
+        <span class="params">(<span name="id">id: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>)</span><span class="result">: T</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Find the record with the given <code>id</code>, if it exists, running the

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>org.positronicnet.testsupport.R</title>
+          <title>org.positronicnet.ui.DoubleBindingException</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
@@ -14,23 +14,25 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a title="Go to companion" href="R$.html"><img src="../../../lib/class_to_object_big.png" /></a>
-        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.testsupport" class="extype" href="package.html">testsupport</a></p>
-        <h1><a title="Go to companion" href="R$.html">R</a></h1>
+        <img src="../../../lib/class_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../package.html">org</a>.<a name="org.positronicnet" class="extype" href="../package.html">positronicnet</a>.<a name="org.positronicnet.ui" class="extype" href="package.html">ui</a></p>
+        <h1>DoubleBindingException</h1>
       </div>
 
       <h4 class="signature" id="signature">
       <span class="kind">class</span>
       <span class="symbol"> 
-        <span class="name">R</span>
+        <span class="name">DoubleBindingException</span>
         
-        <span class="result"> extends AnyRef</span>
+        <span class="result"> extends <span name="java.lang.RuntimeException" class="extype">RuntimeException</span></span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd></dl><div class="toggleContainer block">
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Exception indicating that a widget already has a binder of a particular
+type
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent"><span name="java.lang.RuntimeException" class="extype">RuntimeException</span>, <span name="java.lang.Exception" class="extype">Exception</span>, <span name="java.lang.Throwable" class="extype">Throwable</span>, <span name="java.io.Serializable" class="extype">Serializable</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
         
 
@@ -46,7 +48,7 @@
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="org.positronicnet.testsupport.R" class="in"><span>R</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="org.positronicnet.ui.DoubleBindingException" class="in"><span>DoubleBindingException</span></li><li name="java.lang.RuntimeException" class="in"><span>RuntimeException</span></li><li name="java.lang.Exception" class="in"><span>Exception</span></li><li name="java.lang.Throwable" class="in"><span>Throwable</span></li><li name="java.io.Serializable" class="in"><span>Serializable</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -56,14 +58,14 @@
 
         <div class="members" id="constructors">
               <h3>Instance Constructors</h3>
-              <ol><li visbl="pub" name="org.positronicnet.testsupport.R#this" data-isabs="false">
-      <a id="this:R"></a>
+              <ol><li visbl="pub" name="org.positronicnet.ui.DoubleBindingException#this" data-isabs="false">
+      <a id="this:DoubleBindingException"></a>
       <h4 class="signature">
       <span class="kind">new</span>
       <span class="symbol"> 
-        <span class="name">R</span>
+        <span class="name">DoubleBindingException</span>
         
-        <span class="params">()</span>
+        <span class="params">(<span name="klass">klass: Class[_]</span>, <span name="kind">kind: String</span>)</span>
       </span>
       </h4>
       
@@ -178,6 +180,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#fillInStackTrace" data-isabs="false">
+      <a id="fillInStackTrace():Throwable"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">fillInStackTrace</span>
+        
+        <span class="params">()</span><span class="result">: <span name="java.lang.Throwable" class="extype">Throwable</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -192,6 +205,17 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#getCause" data-isabs="false">
+      <a id="getCause():Throwable"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">getCause</span>
+        
+        <span class="params">()</span><span class="result">: <span name="java.lang.Throwable" class="extype">Throwable</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -203,6 +227,39 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#getLocalizedMessage" data-isabs="false">
+      <a id="getLocalizedMessage():String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">getLocalizedMessage</span>
+        
+        <span class="params">()</span><span class="result">: <span name="java.lang.String" class="extype">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#getMessage" data-isabs="false">
+      <a id="getMessage():String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">getMessage</span>
+        
+        <span class="params">()</span><span class="result">: <span name="java.lang.String" class="extype">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#getStackTrace" data-isabs="false">
+      <a id="getStackTrace():Array[StackTraceElement]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">getStackTrace</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Array" class="extype">Array</span>[<span name="java.lang.StackTraceElement" class="extype">StackTraceElement</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
@@ -214,6 +271,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#initCause" data-isabs="false">
+      <a id="initCause(Throwable):Throwable"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">initCause</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="java.lang.Throwable" class="extype">Throwable</span></span>)</span><span class="result">: <span name="java.lang.Throwable" class="extype">Throwable</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -258,6 +326,50 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#printStackTrace" data-isabs="false">
+      <a id="printStackTrace(PrintWriter):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">printStackTrace</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="java.io.PrintWriter" class="extype">PrintWriter</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#printStackTrace" data-isabs="false">
+      <a id="printStackTrace(PrintStream):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">printStackTrace</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="java.io.PrintStream" class="extype">PrintStream</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#printStackTrace" data-isabs="false">
+      <a id="printStackTrace():Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">printStackTrace</span>
+        
+        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
+    </li><li visbl="pub" name="java.lang.Throwable#setStackTrace" data-isabs="false">
+      <a id="setStackTrace(Array[StackTraceElement]):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">setStackTrace</span>
+        
+        <span class="params">(<span name="arg0">arg0: <span name="scala.Array" class="extype">Array</span>[<span name="java.lang.StackTraceElement" class="extype">StackTraceElement</span>]</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -269,7 +381,7 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="scala.AnyRef#toString" data-isabs="false">
+    </li><li visbl="pub" name="java.lang.Throwable#toString" data-isabs="false">
       <a id="toString():String"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -279,7 +391,7 @@
         <span class="params">()</span><span class="result">: <span name="java.lang.String" class="extype">String</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Throwable → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
       <a id="wait():Unit"></a>
       <h4 class="signature">
@@ -325,7 +437,15 @@
     </li></ol>
             </div>
 
-        <div name="scala.AnyRef" class="parent">
+        <div name="java.lang.RuntimeException" class="parent">
+              <h3>Inherited from <span name="java.lang.RuntimeException" class="extype">RuntimeException</span></h3>
+            </div><div name="java.lang.Exception" class="parent">
+              <h3>Inherited from <span name="java.lang.Exception" class="extype">Exception</span></h3>
+            </div><div name="java.lang.Throwable" class="parent">
+              <h3>Inherited from <span name="java.lang.Throwable" class="extype">Throwable</span></h3>
+            </div><div name="java.io.Serializable" class="parent">
+              <h3>Inherited from <span name="java.io.Serializable" class="extype">Serializable</span></h3>
+            </div><div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">
               <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>

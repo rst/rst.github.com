@@ -58,6 +58,19 @@
       </span>
       </h4>
       <p class="comment cmt">Adapter for cursors produced by PositronicDb queries.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.DoubleBindingException" data-isabs="false">
+      <a id="DoubleBindingException:DoubleBindingException"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="DoubleBindingException.html"><span class="name">DoubleBindingException</span></a>
+        
+        <span class="result"> extends RuntimeException</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Exception indicating that a widget already has a binder of a particular
+type
+</p>
     </li><li visbl="pub" name="org.positronicnet.ui.IndexedSeqAdapter" data-isabs="false">
       <a id="IndexedSeqAdapter:IndexedSeqAdapter[T]"></a>
       <h4 class="signature">
@@ -69,6 +82,17 @@
       </span>
       </h4>
       <p class="comment cmt">Adapter for Scala <code>IndexedSeq</code>s.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.IndexedSeqGroupAdapter" data-isabs="false">
+      <a id="IndexedSeqGroupAdapter:IndexedSeqGroupAdapter[GroupItem, ChildItem]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="IndexedSeqGroupAdapter.html"><span class="name">IndexedSeqGroupAdapter</span></a>
+        <span class="tparams">[<span name="GroupItem">GroupItem &lt;: AnyRef</span>, <span name="ChildItem">ChildItem &lt;: AnyRef</span>]</span>
+        <span class="result"> extends BaseExpandableListAdapter</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Simple adapter for expandable lists.</p>
     </li><li visbl="pub" name="org.positronicnet.ui.IndexedSeqSourceAdapter" data-isabs="false">
       <a id="IndexedSeqSourceAdapter:IndexedSeqSourceAdapter[T]"></a>
       <h4 class="signature">
@@ -81,6 +105,17 @@
       </h4>
       <p class="comment cmt">Adapter for <a name="org.positronicnet.notifications.Notifier" class="extype" href="../notifications/Notifier.html">Notifier</a>s which
 manage (and report changes to) Scala <code>IndexedSeq</code>s.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.NoBinderFor" data-isabs="false">
+      <a id="NoBinderFor:NoBinderFor"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="NoBinderFor.html"><span class="name">NoBinderFor</span></a>
+        
+        <span class="result"> extends RuntimeException</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Exception indicating that there is no binder for a particular widget</p>
     </li><li visbl="pub" name="org.positronicnet.ui.PositronicActivity" data-isabs="false">
       <a id="PositronicActivity:PositronicActivity"></a>
       <h4 class="signature">
@@ -226,12 +261,52 @@ and <a name="org.positronicnet.ui.PositronicItemHandlers" class="extype" href="P
       </h4>
       <p class="comment cmt">An <code>android.widget.TextView</code> with <a name="org.positronicnet.ui.PositronicHandlers" class="extype" href="PositronicHandlers.html">PositronicHandlers</a>
 mixed in.</p>
+    </li><li visbl="pub" name="org.positronicnet.ui.UiBinder" data-isabs="false">
+      <a id="UiBinder:UiBinder"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="UiBinder.html"><span class="name">UiBinder</span></a>
+        
+        <span class="result"> extends BindingManager[org.positronicnet.ui.SimpleBinding[_, _]]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Class that helps shuffle data between properties of
+<a name="org.positronicnet.util.ReflectiveProperties" class="extype" href="../util/ReflectiveProperties.html">ReflectiveProperties</a> objects and
+Android user interface widgets.</p>
     </li></ol>
             </div>
         
         
 
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="org.positronicnet.ui.ResourceId" data-isabs="false">
+      <a id="ResourceId:ResourceId"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ResourceId$.html"><span class="name">ResourceId</span></a>
         
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="org.positronicnet.ui.UiBinder" data-isabs="false">
+      <a id="UiBinder:UiBinder"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="UiBinder$.html"><span class="name">UiBinder</span></a>
+        
+        <span class="result"> extends UiBinder</span>
+      </span>
+      </h4>
+      <p class="comment cmt">A utility <a name="org.positronicnet.ui.UiBinder" class="extype" href="UiBinder.html">UiBinder</a> object,
+implementing default policies for applications that don't
+need to extend them.</p>
+    </li></ol>
+            </div>
 
         
 

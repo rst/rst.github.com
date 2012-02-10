@@ -188,28 +188,6 @@ match those declared for the <a name="org.positronicnet.orm.Scope" class="extype
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#columnFor" data-isabs="false">
-      <a id="columnFor(String):MappedField"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">columnFor</span>
-        
-        <span class="params">(<span name="fieldName">fieldName: String</span>)</span><span class="result">: <span name="org.positronicnet.orm.MappedField" class="extype">MappedField</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#columnNameFor" data-isabs="false">
-      <a id="columnNameFor(String):String"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">columnNameFor</span>
-        
-        <span class="params">(<span name="fieldName">fieldName: String</span>)</span><span class="result">: String</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.orm.Scope#count" data-isabs="false">
       <a id="count:CachingNotifier[Long]"></a>
       <h4 class="signature">
@@ -274,17 +252,17 @@ records matching the extra conditions.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.BaseNotificationManager" class="extype" href="../notifications/BaseNotificationManager.html">BaseNotificationManager</a> → <a name="org.positronicnet.notifications.NotificationManager" class="extype" href="../notifications/NotificationManager.html">NotificationManager</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#defaultForeignKeyField" data-isabs="false">
-      <a id="defaultForeignKeyField:String"></a>
+    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#dataPairs" data-isabs="false">
+      <a id="dataPairs(T):Seq[(String, ContentValue)]"></a>
       <h4 class="signature">
-      <span class="kind">lazy val</span>
+      <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">defaultForeignKeyField</span>
+        <span class="name">dataPairs</span>
         
-        <span class="result">: <span name="java.lang.String" class="extype">String</span></span>
+        <span class="params">(<span name="rec">rec: T</span>)</span><span class="result">: <span name="scala.collection.Seq" class="extype">Seq</span>[(String, <a name="org.positronicnet.content.ContentValue" class="extype" href="../content/ContentValue.html">ContentValue</a>)]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#delete" data-isabs="false">
       <a id="delete(T,Scope[T]):Unit"></a>
       <h4 class="signature">
@@ -340,6 +318,17 @@ records matching the extra conditions.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.notifications.BaseNotificationManager" class="extype" href="../notifications/BaseNotificationManager.html">BaseNotificationManager</a> → <a name="org.positronicnet.notifications.NotificationManager" class="extype" href="../notifications/NotificationManager.html">NotificationManager</a></dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager#dumpFieldsMapping" data-isabs="false">
+      <a id="dumpFieldsMapping((String) ⇒ Unit):Unit"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">dumpFieldsMapping</span>
+        
+        <span class="params">(<span name="sfunc">sfunc: (String) ⇒ <span name="scala.Unit" class="extype">Unit</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -406,17 +395,6 @@ for the sake of ORM extensions, to be implemented as traits
 mixed into <a name="org.positronicnet.orm.RecordManager" class="extype" href="RecordManager.html">RecordManager</a> subclasses,
 on the model of <a name="org.positronicnet.orm.SoftDelete" class="extype" href="">SoftDelete</a>.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#fields" data-isabs="false">
-      <a id="fields:Seq[MappedField]"></a>
-      <h4 class="signature">
-      <span class="kind">lazy val</span>
-      <span class="symbol"> 
-        <span class="name">fields</span>
-        
-        <span class="result">: <span name="scala.collection.Seq" class="extype">Seq</span>[<span name="org.positronicnet.orm.MappedField" class="extype">MappedField</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#fieldsBuffer" data-isabs="false">
       <a id="fieldsBuffer:ArrayBuffer[MappedField]"></a>
       <h4 class="signature">
@@ -454,24 +432,24 @@ on the model of <a name="org.positronicnet.orm.SoftDelete" class="extype" href="
               
         </dd></dl></div>
     </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#find" data-isabs="false">
-      <a id="find(Long,org.positronicnet.content.ContentQuery[_, _]):T"></a>
+      <a id="find(RecordId[T],org.positronicnet.content.ContentQuery[_, _]):T"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">find</span>
         
-        <span class="params">(<span name="id">id: <span name="scala.Long" class="extype">Long</span></span>, <span name="qry">qry: org.positronicnet.content.ContentQuery[_, _]</span>)</span><span class="result">: T</span>
+        <span class="params">(<span name="id">id: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>, <span name="qry">qry: org.positronicnet.content.ContentQuery[_, _]</span>)</span><span class="result">: T</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.orm.Scope#findOnThisThread" data-isabs="false">
-      <a id="findOnThisThread(Long):T"></a>
+      <a id="findOnThisThread(RecordId[T]):T"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">findOnThisThread</span>
         
-        <span class="params">(<span name="id">id: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="result">: T</span>
+        <span class="params">(<span name="id">id: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>)</span><span class="result">: T</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Find the record with the given <code>id</code>, if it exists, running the
@@ -555,6 +533,22 @@ on the model of <a name="org.positronicnet.orm.SoftDelete" class="extype" href="
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager#idFromLong" data-isabs="false">
+      <a id="idFromLong(Long):RecordId[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">idFromLong</span>
+        
+        <span class="params">(<span name="rawId">rawId: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="result">: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Upcasting a raw Long to an ID; sometimes useful in cases where
+serializing &quot;baked&quot; record Ids is really awkward, as in the extras
+to a pending intent.</p><div class="fullcomment"><div class="comment cmt"><p>Upcasting a raw Long to an ID; sometimes useful in cases where
+serializing &quot;baked&quot; record Ids is really awkward, as in the extras
+to a pending intent...
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -566,17 +560,6 @@ on the model of <a name="org.positronicnet.orm.SoftDelete" class="extype" href="
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#javaFields" data-isabs="false">
-      <a id="javaFields:Map[String, Field]"></a>
-      <h4 class="signature">
-      <span class="kind">val</span>
-      <span class="symbol"> 
-        <span class="name">javaFields</span>
-        
-        <span class="result">: <span name="scala.collection.immutable.Map" class="extype">Map</span>[<span name="java.lang.String" class="extype">String</span>, <span name="java.lang.reflect.Field" class="extype">Field</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#killDependentRecords" data-isabs="false">
       <a id="killDependentRecords(org.positronicnet.content.ContentQuery[_, _]):Option[Unit]"></a>
       <h4 class="signature">
@@ -622,25 +605,14 @@ clause.
 May not be supported by all repositories; in particular, it is
 not supported by ContentProviders.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#managedKlass" data-isabs="false">
-      <a id="managedKlass:Class[T]"></a>
-      <h4 class="signature">
-      <span class="kind">val</span>
-      <span class="symbol"> 
-        <span class="name">managedKlass</span>
-        
-        <span class="result">: Class[T]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager#mapField" data-isabs="false">
-      <a id="mapField(String,String,Boolean):Unit"></a>
+      <a id="mapField(String,String,How):Unit"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">mapField</span>
         
-        <span class="params">(<span name="fieldName">fieldName: String</span>, <span name="columnName">columnName: String</span>, <span name="primaryKey">primaryKey: <span name="scala.Boolean" class="extype">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+        <span class="params">(<span name="fieldName">fieldName: String</span>, <span name="columnName">columnName: String</span>, <span name="how">how: How = <span class="symbol"><span class="name"><a href="MapAs$.html">MapAs.ReadWrite</a></span></span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Declare that the field named <code>fieldName</code> in our
@@ -683,19 +655,12 @@ everything explicitly.
       </h4>
       <p class="shortcomment cmt">Produce a new object (to be populated with mapped data from a query).</p><div class="fullcomment"><div class="comment cmt"><p>Produce a new object (to be populated with mapped data from a query).</p><p>Default is to use a niladic constructor if one exists.  Failing that,
 if there is one constructor, and defaults for all its arguments,
-we'll use that.</p><p>In other cases, RecordManagers can override.
+we'll use that.</p><p>Note that if you override this, you might want to provide a niladic
+constructor anyway on the class itself, or strange and unuseuful things
+will happen when attempting to serialize and deserialize our
+<a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>s, e.g., when putting them into the
+extras of an android <code>Intent</code>.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#nonKeyFields" data-isabs="false">
-      <a id="nonKeyFields:Seq[MappedField]"></a>
-      <h4 class="signature">
-      <span class="kind">lazy val</span>
-      <span class="symbol"> 
-        <span class="name">nonKeyFields</span>
-        
-        <span class="result">: <span name="scala.collection.Seq" class="extype">Seq</span>[<span name="org.positronicnet.orm.MappedField" class="extype">MappedField</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="pub" name="org.positronicnet.notifications.BaseNotificationManager#noteChange" data-isabs="false">
       <a id="noteChange:Unit"></a>
       <h4 class="signature">
@@ -790,17 +755,20 @@ order.  The string supplied is used directly in a SQL <code>order</code>
 clause (or passed to the underlying <code>ContentProvider</code>, if
 appropriate).
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a></dd></dl></div>
-    </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#primaryKeyField" data-isabs="false">
-      <a id="primaryKeyField:MappedLongField"></a>
+    </li><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager#primaryKey" data-isabs="false">
+      <a id="primaryKey(String,String):Unit"></a>
       <h4 class="signature">
-      <span class="kind">var</span>
+      <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">primaryKeyField</span>
+        <span class="name">primaryKey</span>
         
-        <span class="result">: <span name="org.positronicnet.orm.MappedLongField" class="extype">MappedLongField</span></span>
+        <span class="params">(<span name="fieldName">fieldName: String</span>, <span name="columnName">columnName: String</span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
+      <p class="shortcomment cmt">Declare a mapping, as with <code>mapField</code>, for a field to be
+designated as the primary key.</p><div class="fullcomment"><div class="comment cmt"><p>Declare a mapping, as with <code>mapField</code>, for a field to be
+designated as the primary key.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="prt" name="org.positronicnet.orm.SoftDelete#queryForAll" data-isabs="false">
       <a id="queryForAll(org.positronicnet.content.ContentQuery[_, _]):org.positronicnet.content.ContentQuery[_, _]"></a>
       <h4 class="signature">
@@ -866,13 +834,13 @@ perhaps something like so:</p><pre>
 to be notified of the new query result.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a></dd></dl></div>
     </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#save" data-isabs="false">
-      <a id="save(T,Scope[T]):Long"></a>
+      <a id="save(T,Scope[T]):RecordId[T]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">save</span>
         
-        <span class="params">(<span name="rec">rec: T</span>, <span name="scope">scope: <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>[T]</span>)</span><span class="result">: <span name="scala.Long" class="extype">Long</span></span>
+        <span class="params">(<span name="rec">rec: T</span>, <span name="scope">scope: <a name="org.positronicnet.orm.Scope" class="extype" href="Scope.html">Scope</a>[T]</span>)</span><span class="result">: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="org.positronicnet.orm" class="extype" href="package.html">orm</a>] </dd><dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
@@ -909,6 +877,17 @@ to be notified of the new query result.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="org.positronicnet.orm.BaseRecordManager#unsavedId" data-isabs="false">
+      <a id="unsavedId:RecordId[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">unsavedId</span>
+        
+        <span class="result">: <a name="org.positronicnet.orm.RecordId" class="extype" href="RecordId.html">RecordId</a>[T]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="org.positronicnet.orm.BaseRecordManager" class="extype" href="BaseRecordManager.html">BaseRecordManager</a></dd></dl></div>
     </li><li visbl="prt" name="org.positronicnet.orm.BaseRecordManager#updateAll" data-isabs="false">
       <a id="updateAll(Scope[T],Seq[(String, ContentValue)]):Unit"></a>
       <h4 class="signature">
