@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: design_note
 title: Better notifiers and futures
 summary: Monads and actors and stuff, oh my!
+disqus_id: better_notifiers
 ---
 ## What might change, and what won't.
 

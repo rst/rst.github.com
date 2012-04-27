@@ -1,7 +1,8 @@
 ---
-layout: post
+layout: design_note
 title: Dealing with "NullColumnHack"
 summary: Dealing gracefully with a SQLite glitch
+disqus_id: nullcolumnhack
 ---
 The native SQLite APIs for Android have a glitch:  inserting a completely
 empty `ContentValues` doesn't work.  The reason is that `SQLite`
